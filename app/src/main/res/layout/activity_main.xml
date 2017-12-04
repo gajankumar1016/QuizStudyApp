@@ -15,7 +15,6 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:elevation="24dp"
         android:text="Go to your courses"
         android:textSize="24sp"
         app:layout_constraintBottom_toBottomOf="parent"

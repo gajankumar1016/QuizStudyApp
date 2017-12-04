@@ -9,7 +9,7 @@
     tools:context="edu.illinois.finalproject.ViewCoursesActivity">
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/addNewCourseButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginBottom="8dp"

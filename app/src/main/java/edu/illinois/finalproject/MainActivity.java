@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
+import edu.illinois.finalproject.coursedisplayimplementation.ViewCoursesActivity;
+
 public class MainActivity extends AppCompatActivity {
 
     private Button goToCoursesButton;

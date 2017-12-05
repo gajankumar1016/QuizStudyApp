@@ -1,4 +1,4 @@
-package edu.illinois.finalproject;
+package edu.illinois.finalproject.coursedisplayimplementation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import edu.illinois.finalproject.DatabaseObjects.Course;
+import edu.illinois.finalproject.databaseobjects.Course;
+import edu.illinois.finalproject.R;
 
 public class ViewCoursesActivity extends AppCompatActivity {
 

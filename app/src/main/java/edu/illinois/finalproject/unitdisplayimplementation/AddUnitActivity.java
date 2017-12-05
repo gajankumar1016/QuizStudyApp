@@ -1,7 +1,6 @@
-package edu.illinois.finalproject;
+package edu.illinois.finalproject.unitdisplayimplementation;
 
 import android.content.Intent;
-import android.provider.ContactsContract;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -12,8 +11,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import edu.illinois.finalproject.DatabaseObjects.Course;
-import edu.illinois.finalproject.DatabaseObjects.Unit;
+import edu.illinois.finalproject.databaseobjects.Unit;
+import edu.illinois.finalproject.R;
 
 public class AddUnitActivity extends AppCompatActivity {
     private String unitsKey;

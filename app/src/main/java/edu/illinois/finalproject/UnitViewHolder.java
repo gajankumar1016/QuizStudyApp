@@ -1,6 +1,7 @@
 package edu.illinois.finalproject;
 
 import android.content.Context;
+import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
@@ -19,7 +20,7 @@ public class UnitViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     public UnitViewHolder(View itemView) {
         super(itemView);
         this.itemView = itemView;
-        this.unitTextView = (TextView) itemView.findViewById(R.id.unitNameTextView);
+        this.unitTextView = (TextView) itemView.findViewById(R.id.problemNameTextView);
         itemView.setOnClickListener(this);
     }
 
@@ -31,16 +32,8 @@ public class UnitViewHolder extends RecyclerView.ViewHolder implements View.OnCl
     @Override
     public void onClick(View v) {
         Context context = v.getContext();
-
+        Intent viewProblemsIntent = new Intent(context, ViewProblemsActivity.class);
+        viewProblemsIntent.putExtra(Intent.EXTRA_TEXT, currentUnit.getKeyToUnitOfProblems());
+        context.startActivity(viewProblemsIntent);
     }
 }
-
-//
-//    @Override
-//    public void onClick(View v) {
-//        Context context = v.getContext();
-//        Intent viewUnitsIntent = new Intent(context, ViewUnitsActivity.class);
-//        viewUnitsIntent.putExtra(Intent.EXTRA_TEXT, currentCourse.getKeyToCourseOfUnits());
-//        context.startActivity(viewUnitsIntent);
-//    }
-//}

@@ -21,7 +21,7 @@ public class CourseViewHolder extends RecyclerView.ViewHolder implements View.On
     public CourseViewHolder(View itemView) {
         super(itemView);
         this.itemView = itemView;
-        this.courseTextView = (TextView) itemView.findViewById(R.id.unitNameTextView);
+        this.courseTextView = (TextView) itemView.findViewById(R.id.problemNameTextView);
         itemView.setOnClickListener(this);
     }
 

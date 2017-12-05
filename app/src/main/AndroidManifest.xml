@@ -19,7 +19,8 @@
         <activity android:name=".ViewCoursesActivity" />
         <activity android:name=".AddCourseActivity" />
         <activity android:name=".ViewUnitsActivity" />
-        <activity android:name=".AddUnitActivity"></activity>
+        <activity android:name=".AddUnitActivity" />
+        <activity android:name=".ViewProblemsActivity"></activity>
     </application>
 
 </manifest>

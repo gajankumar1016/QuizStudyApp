@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.databaseobjects;
+package edu.illinois.finalproject.DatabaseObjects;
 
 /**
  * Created by gajan on 11/22/2017.

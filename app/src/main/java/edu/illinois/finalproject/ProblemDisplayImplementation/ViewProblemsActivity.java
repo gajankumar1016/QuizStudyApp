@@ -1,17 +1,19 @@
-package edu.illinois.finalproject.problemdisplayimplementation;
+package edu.illinois.finalproject.ProblemDisplayImplementation;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.View;
 import android.widget.Button;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import edu.illinois.finalproject.databaseobjects.Problem;
+import edu.illinois.finalproject.DatabaseObjects.Problem;
 import edu.illinois.finalproject.R;
 
 public class ViewProblemsActivity extends AppCompatActivity {
@@ -45,15 +47,15 @@ public class ViewProblemsActivity extends AppCompatActivity {
         unitRecycler.setLayoutManager(new LinearLayoutManager(this));
         unitRecycler.setAdapter(problemAdapter);
 
-       /* addNewUnitButton = (Button) findViewById(R.id.addNewProblemButton);
-        addNewUnitButton.setOnClickListener(new View.OnClickListener() {
+        addNewProblemButton = (Button) findViewById(R.id.addNewProblemButton);
+        addNewProblemButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Context context = v.getContext();
-                Intent addUnitIntent = new Intent(context, AddUnitActivity.class);
-                addUnitIntent.putExtra(Intent.EXTRA_TEXT, keyToUnits);
+                Intent addUnitIntent = new Intent(context, AddProblemActivity.class);
+                addUnitIntent.putExtra(Intent.EXTRA_TEXT, keyToProblems);
                 startActivity(addUnitIntent);
             }
-        });*/
+        });
     }
 }

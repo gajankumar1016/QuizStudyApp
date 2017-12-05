@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.coursedisplayimplementation;
+package edu.illinois.finalproject.CourseDisplayImplementation;
 
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -10,7 +10,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
-import edu.illinois.finalproject.databaseobjects.Course;
+import edu.illinois.finalproject.DatabaseObjects.Course;
 import edu.illinois.finalproject.R;
 
 public class AddCourseActivity extends AppCompatActivity {

@@ -16,11 +16,12 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".coursedisplayimplementation.ViewCoursesActivity" />
-        <activity android:name=".coursedisplayimplementation.AddCourseActivity" />
-        <activity android:name=".unitdisplayimplementation.ViewUnitsActivity" />
-        <activity android:name=".unitdisplayimplementation.AddUnitActivity" />
-        <activity android:name=".problemdisplayimplementation.ViewProblemsActivity"></activity>
+        <activity android:name=".CourseDisplayImplementation.ViewCoursesActivity" />
+        <activity android:name=".CourseDisplayImplementation.AddCourseActivity" />
+        <activity android:name=".UnitDisplayImplementation.ViewUnitsActivity" />
+        <activity android:name=".UnitDisplayImplementation.AddUnitActivity" />
+        <activity android:name=".ProblemDisplayImplementation.ViewProblemsActivity" />
+        <activity android:name=".ProblemDisplayImplementation.AddProblemActivity"></activity>
     </application>
 
 </manifest>

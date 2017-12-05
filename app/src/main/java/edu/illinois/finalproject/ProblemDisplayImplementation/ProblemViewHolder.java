@@ -1,11 +1,11 @@
-package edu.illinois.finalproject.problemdisplayimplementation;
+package edu.illinois.finalproject.ProblemDisplayImplementation;
 
 import android.content.Context;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import edu.illinois.finalproject.databaseobjects.Problem;
+import edu.illinois.finalproject.DatabaseObjects.Problem;
 import edu.illinois.finalproject.R;
 
 /**

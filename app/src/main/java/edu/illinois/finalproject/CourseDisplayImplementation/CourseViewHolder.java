@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.coursedisplayimplementation;
+package edu.illinois.finalproject.CourseDisplayImplementation;
 
 import android.content.Context;
 import android.content.Intent;
@@ -6,9 +6,9 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 import android.widget.TextView;
 
-import edu.illinois.finalproject.databaseobjects.Course;
+import edu.illinois.finalproject.DatabaseObjects.Course;
 import edu.illinois.finalproject.R;
-import edu.illinois.finalproject.unitdisplayimplementation.ViewUnitsActivity;
+import edu.illinois.finalproject.UnitDisplayImplementation.ViewUnitsActivity;
 
 /**
  * Created by gajan on 12/3/2017.

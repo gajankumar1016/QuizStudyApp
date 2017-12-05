@@ -3,9 +3,10 @@ package edu.illinois.finalproject;
 import android.content.Context;
 import android.content.Intent;
 import android.support.v7.widget.RecyclerView;
-import android.view.ContextMenu;
 import android.view.View;
 import android.widget.TextView;
+
+import edu.illinois.finalproject.DatabaseObjects.Course;
 
 /**
  * Created by gajan on 12/3/2017.
@@ -20,7 +21,7 @@ public class CourseViewHolder extends RecyclerView.ViewHolder implements View.On
     public CourseViewHolder(View itemView) {
         super(itemView);
         this.itemView = itemView;
-        this.courseTextView = (TextView) itemView.findViewById(R.id.courseNameTextView);
+        this.courseTextView = (TextView) itemView.findViewById(R.id.unitNameTextView);
         itemView.setOnClickListener(this);
     }
 

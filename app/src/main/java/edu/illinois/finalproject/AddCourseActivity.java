@@ -10,6 +10,8 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.illinois.finalproject.DatabaseObjects.Course;
+
 public class AddCourseActivity extends AppCompatActivity {
 
     @Override

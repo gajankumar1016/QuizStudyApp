@@ -14,6 +14,8 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.illinois.finalproject.DatabaseObjects.Course;
+
 public class ViewCoursesActivity extends AppCompatActivity {
 
     private View itemView;

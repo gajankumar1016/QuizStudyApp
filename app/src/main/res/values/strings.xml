@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">FinalProject</string>
+    <string name="enter_as_either_text_or_image">Enter as either text or image</string>
 </resources>

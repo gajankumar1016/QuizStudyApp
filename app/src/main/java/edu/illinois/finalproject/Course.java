@@ -11,6 +11,10 @@ public class Course {
     public Course() {
     }
 
+    public Course(String name) {
+        this.name = name;
+    }
+
     public Course(String name, String keyToCourseOfUnits) {
         this.name = name;
         this.keyToCourseOfUnits = keyToCourseOfUnits;

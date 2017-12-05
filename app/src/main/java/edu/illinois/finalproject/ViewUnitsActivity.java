@@ -1,5 +1,6 @@
 package edu.illinois.finalproject;
 
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -29,11 +30,11 @@ public class ViewUnitsActivity extends AppCompatActivity {
         }
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference unitsRef = firebaseDatabase.getReference("Units");
+        DatabaseReference unitsOfThisCouseRef = firebaseDatabase.getReference("Units").child(keyToUnits);
 
         final RecyclerView unitRecycler = (RecyclerView) findViewById(R.id.unitsRecyclerView);
         FirebaseRecyclerAdapter<Unit, UnitViewHolder> unitAdapter =
-                new FirebaseRecyclerAdapter<Unit, UnitViewHolder>(Unit.class, R.layout.unit_item, UnitViewHolder.class, unitsRef) {
+                new FirebaseRecyclerAdapter<Unit, UnitViewHolder>(Unit.class, R.layout.unit_item, UnitViewHolder.class, unitsOfThisCouseRef) {
                     @Override
                     protected void populateViewHolder(UnitViewHolder viewHolder, Unit model, int position) {
                         viewHolder.bindUnit(model);
@@ -48,18 +49,11 @@ public class ViewUnitsActivity extends AppCompatActivity {
         addNewUnitButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                Context context = v.getContext();
+                Intent addUnitIntent = new Intent(context, AddUnitActivity.class);
+                addUnitIntent.putExtra(Intent.EXTRA_TEXT, keyToUnits);
+                startActivity(addUnitIntent);
             }
         });
-
-//        addNewCourseButton = (Button) findViewById(R.id.addNewCourseButton);
-//        addNewCourseButton.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                Context context = v.getContext();
-//                Intent addCourseIntent = new Intent(context, AddCourseActivity.class);
-//                startActivity(addCourseIntent);
-//            }
-//        });
     }
 }

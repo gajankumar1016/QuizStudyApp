@@ -23,8 +23,8 @@ public class AddCourseActivity extends AppCompatActivity {
         final DatabaseReference coursesRef = database.getReference("Courses");
         final DatabaseReference unitsRef = database.getReference("Units");
 
-        final EditText enterCourseEditText = (EditText) findViewById(R.id.enterCourseEditText);
-        final Button createCourseButton = (Button) findViewById(R.id.createCourseButton);
+        final EditText enterCourseEditText = (EditText) findViewById(R.id.enterUnitEditText);
+        final Button createCourseButton = (Button) findViewById(R.id.createUnitButton);
         createCourseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

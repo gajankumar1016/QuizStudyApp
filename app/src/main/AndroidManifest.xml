@@ -18,7 +18,8 @@
         </activity>
         <activity android:name=".ViewCoursesActivity" />
         <activity android:name=".AddCourseActivity" />
-        <activity android:name=".ViewUnitsActivity"></activity>
+        <activity android:name=".ViewUnitsActivity" />
+        <activity android:name=".AddUnitActivity"></activity>
     </application>
 
 </manifest>

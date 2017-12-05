@@ -11,6 +11,11 @@ public class Unit {
     public Unit() {
     }
 
+    public Unit(String name, String keyToUnitOfProblems) {
+        this.name = name;
+        this.keyToUnitOfProblems = keyToUnitOfProblems;
+    }
+
     public String getName() {
         return name;
     }

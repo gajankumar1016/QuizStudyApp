@@ -28,7 +28,7 @@ public class ViewCoursesActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference coursesRef = database.getReference("Courses");
 
-        final RecyclerView courseRecycler = (RecyclerView) findViewById(R.id.coursesRecyclerView);
+        final RecyclerView courseRecycler = (RecyclerView) findViewById(R.id.unitsRecyclerView);
         FirebaseRecyclerAdapter<Course, CourseViewHolder> courseAdapter =
                 new FirebaseRecyclerAdapter<Course, CourseViewHolder>
                         (Course.class, R.layout.course_item, CourseViewHolder.class, coursesRef) {

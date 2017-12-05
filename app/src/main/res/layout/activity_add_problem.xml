@@ -17,6 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Problem:"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -26,32 +27,59 @@
             android:text="@string/enter_as_either_text_or_image"
             android:textStyle="italic" />
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="115dp"
             android:orientation="horizontal">
 
             <EditText
                 android:id="@+id/problemEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:hint="Enter Problem, Theorem, Prompt, etc."
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/captureProblemPhotoButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Capture Photo" />
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Capture Photo"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintHorizontal_bias="0.0"
+                app:layout_constraintStart_toEndOf="@+id/problemEditText"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/captureProblemPhotoButton" />
+
+        </android.support.constraint.ConstraintLayout>
 
         <TextView
             android:id="@+id/answerTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:text=" Answer: (Optional)"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -64,7 +92,7 @@
         <EditText
             android:id="@+id/answerEditText"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
             android:ems="10"
             android:hint="Enter Answer"
             android:inputType="textPersonName" />
@@ -73,8 +101,9 @@
             android:id="@+id/solutionTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="30dp"
+            android:layout_marginTop="15dp"
             android:text="Solution:"
+            android:textSize="18sp"
             android:textStyle="bold" />
 
         <TextView
@@ -84,7 +113,7 @@
             android:text="@string/enter_as_either_text_or_image"
             android:textStyle="italic" />
 
-        <LinearLayout
+        <android.support.constraint.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
@@ -93,15 +122,48 @@
                 android:id="@+id/solutionEditText"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="8dp"
+                android:layout_marginStart="8dp"
+                android:layout_marginTop="8dp"
                 android:ems="10"
                 android:hint="Enter Solution, Proof, Response, etc."
-                android:inputType="textPersonName" />
+                android:inputType="textPersonName"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <Button
+                android:id="@+id/captureSolutionPhotoButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Capture Photo" />
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginTop="8dp"
+                android:text="Capture Photo"
+                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toEndOf="@+id/solutionEditText"
+                app:layout_constraintTop_toTopOf="parent" />
 
-        </LinearLayout>
+            <ImageView
+                android:id="@+id/imageView"
+                android:layout_width="84dp"
+                android:layout_height="57dp"
+                android:layout_marginBottom="8dp"
+                android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
+                android:src="@mipmap/ic_launcher"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent" />
+        </android.support.constraint.ConstraintLayout>
+
+        <Button
+            android:id="@+id/createProblemButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="10dp"
+            android:text="Create" />
     </LinearLayout>
+
 </ScrollView>

@@ -19,6 +19,7 @@ public class AddCourseActivity extends AppCompatActivity {
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference coursesRef = database.getReference("Courses");
+        final DatabaseReference unitsRef = database.getReference("Units");
 
         final EditText enterCourseEditText = (EditText) findViewById(R.id.enterCourseEditText);
         final Button createCourseButton = (Button) findViewById(R.id.createCourseButton);
@@ -32,7 +33,8 @@ public class AddCourseActivity extends AppCompatActivity {
                     Toast.makeText(v.getContext(), errorMessage, Toast.LENGTH_LONG).show();
 
                 } else {
-                    Course newCourse = new Course(courseNameInput);
+                    String keyToUnits = unitsRef.push().getKey();
+                    Course newCourse = new Course(courseNameInput, keyToUnits);
                     coursesRef.push().setValue(newCourse);
                     finish();
                 }

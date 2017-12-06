@@ -14,11 +14,13 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import edu.illinois.finalproject.DatabaseObjects.Unit;
+import edu.illinois.finalproject.QuizQuestionActivity;
 import edu.illinois.finalproject.R;
 
 public class ViewUnitsActivity extends AppCompatActivity {
     private String keyToUnits;
     private Button addNewUnitButton;
+    private Button receiveQuizQuestionButton;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -54,6 +56,17 @@ public class ViewUnitsActivity extends AppCompatActivity {
                 Intent addUnitIntent = new Intent(context, AddUnitActivity.class);
                 addUnitIntent.putExtra(Intent.EXTRA_TEXT, keyToUnits);
                 startActivity(addUnitIntent);
+            }
+        });
+
+        receiveQuizQuestionButton = (Button) findViewById(R.id.receiveQuizQuestionButton);
+        receiveQuizQuestionButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Context context = v.getContext();
+                Intent quizQuestionIntent = new Intent(context, QuizQuestionActivity.class);
+                quizQuestionIntent.putExtra(Intent.EXTRA_TEXT, keyToUnits);
+                startActivity(quizQuestionIntent);
             }
         });
     }

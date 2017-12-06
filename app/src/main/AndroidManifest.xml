@@ -21,7 +21,8 @@
         <activity android:name=".UnitDisplayImplementation.ViewUnitsActivity" />
         <activity android:name=".UnitDisplayImplementation.AddUnitActivity" />
         <activity android:name=".ProblemDisplayImplementation.ViewProblemsActivity" />
-        <activity android:name=".ProblemDisplayImplementation.AddProblemActivity"></activity>
+        <activity android:name=".ProblemDisplayImplementation.AddProblemActivity" />
+        <activity android:name=".QuizQuestionActivity"></activity>
     </application>
 
 </manifest>

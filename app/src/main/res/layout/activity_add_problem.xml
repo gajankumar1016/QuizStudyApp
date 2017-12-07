@@ -16,7 +16,7 @@
             android:id="@+id/problemTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Problem:"
+            android:text="@string/problem"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -39,7 +39,7 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-                android:hint="Enter Problem, Theorem, Prompt, etc."
+                android:hint="@string/enter_problem_theorem_prompt_etc"
                 android:inputType="textPersonName"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
@@ -51,7 +51,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Capture Photo"
+                android:text="@string/capture_photo"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintHorizontal_bias="0.0"
                 app:layout_constraintStart_toEndOf="@+id/problemEditText"
@@ -70,7 +70,8 @@
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/captureProblemPhotoButton" />
+                app:layout_constraintTop_toBottomOf="@+id/captureProblemPhotoButton"
+                android:contentDescription="@string/captures_photo_for_problem" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -79,7 +80,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text=" Answer: (Optional)"
+            android:text="@string/answer_optional"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -87,7 +88,7 @@
             android:id="@+id/enterAnswerPromptTextView"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Answer on quiz must match this exactly to be correct"
+            android:text="@string/answer_on_quiz_must_match_this_exactly_to_be_correct"
             android:textStyle="italic" />
 
         <EditText
@@ -95,7 +96,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
-            android:hint="Enter Answer"
+            android:hint="@string/enter_answer"
             android:inputType="textPersonName" />
 
         <TextView
@@ -103,7 +104,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="15dp"
-            android:text="Solution:"
+            android:text="@string/solution"
             android:textSize="18sp"
             android:textStyle="bold" />
 
@@ -127,9 +128,9 @@
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:ems="10"
-                android:hint="Enter Solution, Proof, Response, etc."
+                android:hint="@string/enter_solution_proof_response_etc"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                app:layout_constraintBottom_toTopOf="@+id/solutionImageView"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -140,14 +141,14 @@
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginTop="8dp"
-                android:text="Capture Photo"
-                app:layout_constraintBottom_toTopOf="@+id/imageView"
+                android:text="@string/capture_photo"
+                app:layout_constraintBottom_toTopOf="@+id/solutionImageView"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/solutionEditText"
                 app:layout_constraintTop_toTopOf="parent" />
 
             <ImageView
-                android:id="@+id/imageView"
+                android:id="@+id/solutionImageView"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -157,7 +158,8 @@
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent"
+                android:contentDescription="@string/imageview_for_solution" />
         </android.support.constraint.ConstraintLayout>
 
         <Button
@@ -165,7 +167,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Create" />
+            android:text="@string/create" />
     </LinearLayout>
 
 </ScrollView>

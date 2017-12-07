@@ -17,7 +17,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:ems="10"
-            android:hint="Unit Name"
+            android:hint="@string/unit_name"
             android:inputType="textPersonName" />
 
         <Button
@@ -25,7 +25,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            android:text="Create" />
+            android:text="@string/create" />
 
 
     </LinearLayout>

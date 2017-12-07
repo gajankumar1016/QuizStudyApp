@@ -24,7 +24,7 @@
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
-            android:text="ProblemName"
+            android:text="@string/problemname"
             android:textSize="45sp"
             android:textStyle="bold"
             app:layout_constraintBottom_toBottomOf="parent"

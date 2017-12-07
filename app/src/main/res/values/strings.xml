@@ -21,4 +21,23 @@
     <string name="displayanswer">DisplayAnswer</string>
     <string name="displaysolution">DisplaySolution</string>
     <string name="expanded_problem_or_solution_imageview">Expanded problem or solution ImageView</string>
+    <string name="course_name">Course Name</string>
+    <string name="create">Create</string>
+    <string name="enter_problem_theorem_prompt_etc">Enter Problem, Theorem, Prompt, etc.</string>
+    <string name="capture_photo">Capture Photo</string>
+    <string name="captures_photo_for_problem">Captures photo for problem</string>
+    <string name="answer_optional">Answer: (Optional)</string>
+    <string name="answer_on_quiz_must_match_this_exactly_to_be_correct">Answer on quiz must match this exactly to be correct</string>
+    <string name="enter_answer">Enter Answer</string>
+    <string name="enter_solution_proof_response_etc">Enter Solution, Proof, Response, etc.</string>
+    <string name="imageview_for_solution">ImageView for solution</string>
+    <string name="unit_name">Unit Name</string>
+    <string name="go_to_your_courses">Go to your courses</string>
+    <string name="add_new_course">Add new course</string>
+    <string name="add_new_problem">Add new problem</string>
+    <string name="add_new_unit">Add new unit</string>
+    <string name="receive_quiz_question">Receive Quiz Question</string>
+    <string name="coursename">CourseName</string>
+    <string name="problemname">ProblemName</string>
+    <string name="unitname">UnitName</string>
 </resources>

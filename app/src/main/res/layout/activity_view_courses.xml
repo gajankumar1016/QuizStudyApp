@@ -16,7 +16,7 @@
         android:layout_marginEnd="8dp"
         android:layout_marginStart="8dp"
         android:layout_marginTop="8dp"
-        android:text="Add new course" />
+        android:text="@string/add_new_course" />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/problemsRecyclerView"

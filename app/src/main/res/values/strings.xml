@@ -16,4 +16,9 @@
     <string name="answer">Answer:</string>
     <string name="expand_imagebutton_to_display_solution">Expand ImageButton to display solution</string>
     <string name="expanded_imageview_to_display_solution">Expanded ImageView to display solution</string>
+    <string name="problem">Problem:</string>
+    <string name="displayproblem">DisplayProblem</string>
+    <string name="displayanswer">DisplayAnswer</string>
+    <string name="displaysolution">DisplaySolution</string>
+    <string name="expanded_problem_or_solution_imageview">Expanded problem or solution ImageView</string>
 </resources>

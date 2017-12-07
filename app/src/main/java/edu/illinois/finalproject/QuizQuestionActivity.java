@@ -16,24 +16,20 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
-import com.google.firebase.database.ValueEventListener;
 
-import org.w3c.dom.Text;
-
-import java.util.Arrays;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Random;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.TimeUnit;
 
 import edu.illinois.finalproject.DatabaseObjects.Problem;
 import edu.illinois.finalproject.DatabaseObjects.Unit;
 
 public class QuizQuestionActivity extends AppCompatActivity {
     private String unitsKey;
-    private Map<String, Unit> keyToUnitMap;
-    private Map<String, Problem> keyToProblemMap;
+    private Map<String, Unit> keyToUnitMap = new HashMap<>();
+    private Map<String, Problem> keyToProblemMap = new HashMap<>();
     private TextView quizProblemTextView;
     private ImageView quizProblemImageView;
     private Problem randomQuizProblem;
@@ -90,72 +86,97 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 startActivity(viewSolutionIntent);
             }
         });
-
-        /*final CountDownLatch countDownLatch = new CountDownLatch(1);
-        updateUnitsAndProblemsMaps();
-        try {
-            countDownLatch.await(2, TimeUnit.SECONDS);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-
-        randomQuizProblem = selectRandomProblem();
-
-        if (randomQuizProblem != null) {
-            quizProblemTextView.setText(randomQuizProblem.getProblem());
-        }*/
-    }
-
-    private void updateUnitsAndProblemsMaps() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference unitsRef = database.getReference("Units").child(unitsKey);
-        unitsRef.addValueEventListener(new ValueEventListener() {
+        final DatabaseReference problemsRef = database.getReference("Problems");
+        readProblemsFromDatabaseAndDisplayRandomProblem(unitsRef, problemsRef);
+
+    }
+
+    //https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
+    private void readProblemsFromDatabaseAndDisplayRandomProblem(final DatabaseReference unitsRef, final DatabaseReference problemsRef) {
+        new DatabaseUtils().readInFireBaseData(unitsRef, new OnGetDataListener() {
             @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
+            public void onStart() {
+
+            }
+
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
                 //https://firebase.google.com/docs/reference/android/com/google/firebase/database/GenericTypeIndicator
                 GenericTypeIndicator<Map<String, Unit>> unitsGti =
                         new GenericTypeIndicator<Map<String, Unit>>() {};
                 keyToUnitMap = dataSnapshot.getValue(unitsGti);
-                updateKeyToProblemsMap();
+
+                if (keyToUnitMap != null) {
+                    Log.d("QuizQuestions", keyToUnitMap.toString());
+
+                    List<Unit> unitsList = new ArrayList<>(keyToUnitMap.values());
+                    for (int i = 0; i < unitsList.size(); i++) {
+
+                        String problemsKey = unitsList.get(i).getKeyToUnitOfProblems();
+                        DatabaseReference problemsOfThisUnitRef = problemsRef.child(problemsKey);
+
+                        //indicate if this is the last unit so that a random problem can be generated
+                        //and displayed to the user
+                        if (i == unitsList.size() - 1) {
+                            readProblemsData(problemsOfThisUnitRef, true);
+                        } else {
+                            readProblemsData(problemsOfThisUnitRef, false);
+                        }
+
+                    }
+                } else {
+                    quizProblemTextView.setText(R.string.noProblems);
+                }
             }
 
             @Override
-            public void onCancelled(DatabaseError databaseError) {
+            public void onFailed(DatabaseError databaseError) {
 
             }
         });
     }
 
-    private void updateKeyToProblemsMap() {
-        keyToProblemMap = new HashMap<>();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference problemsRef = database.getReference("Problems");
+    //https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
+    private void readProblemsData(DatabaseReference problemsRef, final boolean isLastUnit) {
+        new DatabaseUtils().readInFireBaseData(problemsRef, new OnGetDataListener() {
+            @Override
+            public void onStart() {
 
-        for (Unit unit : keyToUnitMap.values()) {
-            String problemsKey = unit.getKeyToUnitOfProblems();
-            DatabaseReference problemsOfThisUnitRef = problemsRef.child(problemsKey);
-            problemsOfThisUnitRef.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(DataSnapshot dataSnapshot) {
-                    GenericTypeIndicator<Map<String, Problem>> problemsGti =
-                            new GenericTypeIndicator<Map<String, Problem>>() {};
-                    Map<String, Problem> tempKeyToProblemMap = dataSnapshot.getValue(problemsGti);
+            }
 
-                    //the map could be null if the user hasn't created problems for the current unit yet.
-                    if (tempKeyToProblemMap != null) {
-                        for (Map.Entry<String, Problem> entry : tempKeyToProblemMap.entrySet()) {
-                            Log.d("QuizQuestion", entry.getKey() + " " + entry.getValue());
-                            keyToProblemMap.put(entry.getKey(), entry.getValue());
-                        }
+            @Override
+            public void onSuccess(DataSnapshot dataSnapshot) {
+                //https://firebase.google.com/docs/reference/android/com/google/firebase/database/GenericTypeIndicator
+                GenericTypeIndicator<Map<String, Problem>> problemsGti =
+                        new GenericTypeIndicator<Map<String, Problem>>() {};
+                Map<String, Problem> tempKeyToProblemMap = dataSnapshot.getValue(problemsGti);
+
+                //the map could be null if the user hasn't created problems for the current unit yet.
+                if (tempKeyToProblemMap != null) {
+                    for (Map.Entry<String, Problem> entry : tempKeyToProblemMap.entrySet()) {
+                        Log.d("QuizQuestion", entry.getKey() + " " + entry.getValue());
+                        keyToProblemMap.put(entry.getKey(), entry.getValue());
                     }
                 }
 
-                @Override
-                public void onCancelled(DatabaseError databaseError) {
+                if (isLastUnit) {
+                    randomQuizProblem = selectRandomProblem();
 
+                    if (randomQuizProblem != null) {
+                        quizProblemTextView.setText(randomQuizProblem.getProblem());
+                    } else {
+                        quizProblemTextView.setText(R.string.noProblems);
+                    }
                 }
-            });
-        }
+            }
+
+            @Override
+            public void onFailed(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private Problem selectRandomProblem() {
@@ -164,8 +185,8 @@ public class QuizQuestionActivity extends AppCompatActivity {
         }
         Random random = new Random();
         int randomIndex = random.nextInt(keyToProblemMap.size());
-        Problem[] problems = (Problem[]) keyToProblemMap.values().toArray();
-        Log.d("Quiz Questions", Arrays.toString(problems));
-        return problems[randomIndex];
+        List<Problem> problemList = new ArrayList<>(keyToProblemMap.values());
+        Log.d("Quiz Questions", problemList.get(randomIndex).toString());
+        return problemList.get(randomIndex);
     }
 }

@@ -2,4 +2,11 @@
     <string name="app_name">FinalProject</string>
     <string name="enter_as_either_text_or_image">Enter as either text or image</string>
     <string name="noProblems">No problems to display</string>
+    <string name="quizproblem">QuizProblem</string>
+    <string name="when_user_clicks_it_expands_into_an_imageview">When user clicks, it expands into an ImageView</string>
+    <string name="type_answer">Type Answer</string>
+    <string name="check_answer">Check Answer</string>
+    <string name="view_solution">View Solution</string>
+    <string name="give_up">Give Up</string>
+    <string name="expanded_imageview_to_display_problem_image">Expanded ImageView to display problem image</string>
 </resources>

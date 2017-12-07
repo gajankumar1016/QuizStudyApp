@@ -45,7 +45,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
         }
 
         quizProblemTextView = (TextView) findViewById(R.id.quizProblemTextView);
-        quizProblemImageView = (ImageView) findViewById(R.id.quizProblemImageView);
+        quizProblemImageView = (ImageView) findViewById(R.id.quizProblemImageButton);
         final EditText enterAnswerEditText = (EditText) findViewById(R.id.enterAnswerEditText);
         final Button checkAnswerButton = (Button) findViewById(R.id.checkAnswerButton);
         final Button viewSolutionButton = (Button) findViewById(R.id.viewSolutionButton);
@@ -180,7 +180,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
     }
 
     private Problem selectRandomProblem() {
-        if (keyToProblemMap == null) {
+        if (keyToProblemMap.size() == 0) {
             return null;
         }
         Random random = new Random();

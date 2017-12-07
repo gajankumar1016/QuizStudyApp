@@ -9,4 +9,11 @@
     <string name="view_solution">View Solution</string>
     <string name="give_up">Give Up</string>
     <string name="expanded_imageview_to_display_problem_image">Expanded ImageView to display problem image</string>
+    <string name="your_answer_status">Your Answer Status</string>
+    <string name="correct_answer">Correct Answer</string>
+    <string name="solution">Solution:</string>
+    <string name="the_problem_s_solution">The problem\'s solution</string>
+    <string name="answer">Answer:</string>
+    <string name="expand_imagebutton_to_display_solution">Expand ImageButton to display solution</string>
+    <string name="expanded_imageview_to_display_solution">Expanded ImageView to display solution</string>
 </resources>

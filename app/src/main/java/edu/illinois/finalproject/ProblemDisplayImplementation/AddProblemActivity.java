@@ -16,8 +16,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.OnFailureListener;
-import com.google.android.gms.tasks.OnSuccessListener;
+import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -30,17 +29,20 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
+import java.util.concurrent.CountDownLatch;
 
 import edu.illinois.finalproject.DatabaseObjects.Problem;
+import edu.illinois.finalproject.DatabaseUtils;
 import edu.illinois.finalproject.R;
+import edu.illinois.finalproject.UnitDisplayImplementation.OnGetUrlListener;
 
 public class AddProblemActivity extends AppCompatActivity {
     private String problemsKey;
     //Used to save path to current photo when user rotates the device
     private static final String CURRENT_PHOTO_PATH_TEXT_KEY = "currentPhotoPath";
     //Used as request code when launching and then receiving results from the camera app
-    private static final int REQUEST_TAKE_PHOTO_PROBLEM = 1;
-    private static final int REQUEST_TAKE_PHOTO_SOLUTION = 2;
+    private static final int REQUEST_PROBLEM_IMAGE = 1;
+    private static final int REQUEST_SOLUTION_IMAGE = 2;
 
     private StorageReference mStorageRef;
     //holds path to most recent jpg file for most recent picture taken by the camera
@@ -61,6 +63,9 @@ public class AddProblemActivity extends AppCompatActivity {
 
     FirebaseDatabase database;
     DatabaseReference problemsRef;
+
+    private Problem currentProblem = new Problem();
+    private CountDownLatch countDownLatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -84,6 +89,30 @@ public class AddProblemActivity extends AppCompatActivity {
         solutionImageButton = (ImageButton) findViewById(R.id.solutionImageButton);
         createButton = (Button) findViewById(R.id.createProblemButton);
 
+        setUpTextWatchers();
+
+        setUpCapturePhotoButtons();
+
+        setUpCreateButton();
+    }
+
+    private void setUpCapturePhotoButtons() {
+        captureProblemPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent(REQUEST_PROBLEM_IMAGE);
+            }
+        });
+
+        captureSolutionPhotoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dispatchTakePictureIntent(REQUEST_SOLUTION_IMAGE);
+            }
+        });
+    }
+
+    private void setUpTextWatchers() {
         problemEditText.addTextChangedListener(new TextWatcher() {
             @Override
             public void beforeTextChanged(CharSequence s, int start, int count, int after) {
@@ -125,22 +154,6 @@ public class AddProblemActivity extends AppCompatActivity {
 
             }
         });
-
-        captureProblemPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchTakePictureIntent(REQUEST_TAKE_PHOTO_PROBLEM);
-            }
-        });
-
-        captureSolutionPhotoButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dispatchTakePictureIntent(REQUEST_TAKE_PHOTO_SOLUTION);
-            }
-        });
-
-        setUpCreateButton();
     }
 
     private void setUpCreateButton() {
@@ -161,32 +174,23 @@ public class AddProblemActivity extends AppCompatActivity {
                     return;
                 }
 
-                String problemForNewProblem = "";
+                /*At this point the problem is valid*/
+                //the relevant sets will be overridden if the user inputted an image
+                currentProblem.setProblem(problemInputText);
+                currentProblem.setAnswer(answer);
+                currentProblem.setSolution(solutionInputText);
+
                 if (mostRecentProblemPhotoPath != null) {
-                    pushImageToDatabaseAndGetDownloadUrl(mostRecentProblemPhotoPath);
-                    if (currentImageDownloadUrl != null) {
-                        problemForNewProblem = currentImageDownloadUrl;
-                        //reset for pushing solution to firebase
-                        currentImageDownloadUrl = null;
-                    }
-                } else {
-                    problemForNewProblem = problemInputText;
+                    boolean isLastUpload = mostRecentSolutionPhotoPath == null;
+                    pushImageToDatabaseAndSetDownloadUrl(mostRecentProblemPhotoPath, currentProblem, isLastUpload, REQUEST_PROBLEM_IMAGE);
                 }
 
-                String solutionForNewProblem = "";
                 if (mostRecentSolutionPhotoPath != null) {
-                    pushImageToDatabaseAndGetDownloadUrl(mostRecentSolutionPhotoPath);
-                    if (currentImageDownloadUrl != null) {
-                        solutionForNewProblem = currentImageDownloadUrl;
-                        currentImageDownloadUrl = null;
-                    } else {
-                        solutionForNewProblem = solutionInputText;
-                    }
+                    pushImageToDatabaseAndSetDownloadUrl(mostRecentSolutionPhotoPath, currentProblem, true, REQUEST_SOLUTION_IMAGE);
+                } else {
+                    problemsRef.child(problemsKey).push().setValue(currentProblem);
+                    finish();
                 }
-
-                Problem newProblem = new Problem(problemForNewProblem, answer, solutionForNewProblem);
-                problemsRef.child(problemsKey).push().setValue(newProblem);
-                finish();
             }
         });
     }
@@ -247,13 +251,13 @@ public class AddProblemActivity extends AppCompatActivity {
         if (resultCode != RESULT_OK) {
             displayToast("An error occurred creating photo");
         }
-        if (!(requestCode == REQUEST_TAKE_PHOTO_PROBLEM || requestCode == REQUEST_TAKE_PHOTO_SOLUTION)) {
+        if (!(requestCode == REQUEST_PROBLEM_IMAGE || requestCode == REQUEST_SOLUTION_IMAGE)) {
             displayToast("An request error occurred");
         }
 
         //At this point either the request code was for a problem photo or it was for a solution photo
         ImageButton currentImageButton;
-        if (requestCode == REQUEST_TAKE_PHOTO_PROBLEM) {
+        if (requestCode == REQUEST_PROBLEM_IMAGE) {
             currentImageButton = problemImageButton;
             mostRecentProblemPhotoPath = mostRecentPhotoPath;
         } else {
@@ -268,36 +272,44 @@ public class AddProblemActivity extends AppCompatActivity {
                 .load(mostRecentPhotoPath).into(currentImageButton);
     }
 
-    private void pushImageToDatabaseAndGetDownloadUrl(String pathToFile) {
+    private void pushImageToDatabaseAndSetDownloadUrl(String pathToFile, final Problem newProblem, final boolean isLastUpload, final int requestCode) {
+        new DatabaseUtils().uploadImage(pathToFile, mStorageRef, new OnGetUrlListener() {
+            @Override
+            public void onStart() {
 
-        /*Obtains filename*/
-        //The following line is derived from
-        // https://stackoverflow.com/questions/26570084/how-to-get-file-name-from-file-path-in-android
-        String imageFileName =
-                pathToFile.substring(pathToFile.lastIndexOf("/") + 1);
+            }
 
-        //Attempt to upload image to Firebase storage
-        StorageReference imageStorageRef = mStorageRef.child(imageFileName);
-        imageStorageRef.putFile(Uri.parse(pathToFile))
-                .addOnSuccessListener(new OnSuccessListener<UploadTask.TaskSnapshot>() {
-                    @Override
-                    public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
-                        if (taskSnapshot.getDownloadUrl() != null) {
-                            currentImageDownloadUrl = taskSnapshot.getDownloadUrl().toString();
-                            displayToast("Upload to Firebase succeeded!\n" + currentImageDownloadUrl);
-                        } else {
-                            currentImageDownloadUrl = null;
-                            displayToast("Error: Could not get download URL");
+            @Override
+            public void onSuccess(UploadTask.TaskSnapshot taskSnapshot) {
+                if (taskSnapshot.getDownloadUrl() != null) {
+                    String downloadUrl = taskSnapshot.getDownloadUrl().toString();
+                    if (requestCode == REQUEST_PROBLEM_IMAGE) {
+                        newProblem.setProblem(downloadUrl);
+
+                        if (isLastUpload) {
+                            problemsRef.child(problemsKey).push().setValue(currentProblem);
+                            finish();
                         }
+                    } else if (requestCode == REQUEST_SOLUTION_IMAGE) {
+                        newProblem.setSolution(downloadUrl);
+
+                        //If the solution is set, it is ready to upload and we can exit this activity
+                        problemsRef.child(problemsKey).push().setValue(currentProblem);
+                        finish();
                     }
-                })
-                .addOnFailureListener(new OnFailureListener() {
-                    @Override
-                    public void onFailure(@NonNull Exception e) {
-                        e.printStackTrace();
-                        displayToast("Upload to Firebase failed.");
-                    }
-                });
+                    displayToast("Upload to Firebase succeeded!\n" + downloadUrl);
+                } else {
+                    currentImageDownloadUrl = null;
+                    displayToast("Error: Could not get download URL");
+                }
+            }
+
+            @Override
+            public void onFailed(@NonNull Exception e) {
+                e.printStackTrace();
+                displayToast("Upload to Firebase failed.");
+            }
+        });
     }
 
     /**

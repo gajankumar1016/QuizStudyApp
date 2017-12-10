@@ -37,7 +37,7 @@ public class DatabaseUtils {
         });
     }
 
-    public void uploadImageAndGetDownloadUrl(final String pathToFile, StorageReference storageReference, final OnGetUrlListener listener) {
+    public void uploadImage(final String pathToFile, StorageReference storageReference, final OnGetUrlListener listener) {
         /*Obtains filename*/
         //The following line is derived from
         // https://stackoverflow.com/questions/26570084/how-to-get-file-name-from-file-path-in-android

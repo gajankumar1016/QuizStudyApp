@@ -31,6 +31,7 @@ import java.util.Date;
 import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
+import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.DatabaseObjects.Problem;
 import edu.illinois.finalproject.DatabaseUtils;
 import edu.illinois.finalproject.R;
@@ -78,7 +79,7 @@ public class AddProblemActivity extends AppCompatActivity {
         }
 
         database = FirebaseDatabase.getInstance();
-        problemsRef = database.getReference("Problems");
+        problemsRef = database.getReference(Constants.FIREBASE_PROBLEMS_ROOT);
         mStorageRef = FirebaseStorage.getInstance().getReference();
         problemEditText = (EditText) findViewById(R.id.problemEditText);
         captureProblemPhotoButton = (Button) findViewById(R.id.captureProblemPhotoButton);

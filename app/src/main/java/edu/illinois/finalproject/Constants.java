@@ -6,4 +6,7 @@ package edu.illinois.finalproject;
 
 public class Constants {
     public static final String FIREBASE_STORAGE_URL ="https://firebasestorage.googleapis.com";
+    public static final String FIREBASE_COURSES_ROOT = "Courses";
+    public static final String FIREBASE_UNITS_ROOT = "Units";
+    public static final String FIREBASE_PROBLEMS_ROOT = "Problems";
 }

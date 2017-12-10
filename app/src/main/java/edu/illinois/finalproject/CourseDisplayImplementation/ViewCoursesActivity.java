@@ -14,6 +14,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.DatabaseObjects.Course;
 import edu.illinois.finalproject.R;
 
@@ -29,7 +30,7 @@ public class ViewCoursesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_courses);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference coursesRef = database.getReference("Courses");
+        DatabaseReference coursesRef = database.getReference(Constants.FIREBASE_COURSES_ROOT);
 
         final RecyclerView courseRecycler = (RecyclerView) findViewById(R.id.problemsRecyclerView);
         FirebaseRecyclerAdapter<Course, CourseViewHolder> courseAdapter =

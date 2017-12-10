@@ -10,6 +10,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.DatabaseObjects.Course;
 import edu.illinois.finalproject.R;
 
@@ -21,8 +22,8 @@ public class AddCourseActivity extends AppCompatActivity {
         setContentView(R.layout.activity_add_course);
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference coursesRef = database.getReference("Courses");
-        final DatabaseReference unitsRef = database.getReference("Units");
+        final DatabaseReference coursesRef = database.getReference(Constants.FIREBASE_COURSES_ROOT);
+        final DatabaseReference unitsRef = database.getReference(Constants.FIREBASE_UNITS_ROOT);
 
         final EditText enterCourseEditText = (EditText) findViewById(R.id.enterUnitEditText);
         final Button createCourseButton = (Button) findViewById(R.id.createUnitButton);

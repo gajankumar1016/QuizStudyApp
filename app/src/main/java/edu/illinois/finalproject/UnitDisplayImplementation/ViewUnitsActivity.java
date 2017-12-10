@@ -13,6 +13,7 @@ import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.DatabaseObjects.Unit;
 import edu.illinois.finalproject.QuizQuestionActivity;
 import edu.illinois.finalproject.R;
@@ -33,7 +34,7 @@ public class ViewUnitsActivity extends AppCompatActivity {
         }
 
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference unitsOfThisCouseRef = firebaseDatabase.getReference("Units").child(keyToUnits);
+        DatabaseReference unitsOfThisCouseRef = firebaseDatabase.getReference(Constants.FIREBASE_UNITS_ROOT).child(keyToUnits);
 
         final RecyclerView unitRecycler = (RecyclerView) findViewById(R.id.problemsRecyclerView);
         FirebaseRecyclerAdapter<Unit, UnitViewHolder> unitAdapter =

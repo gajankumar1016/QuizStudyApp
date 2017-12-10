@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
+import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.DatabaseObjects.Unit;
 import edu.illinois.finalproject.R;
 
@@ -28,8 +29,8 @@ public class AddUnitActivity extends AppCompatActivity {
         }
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference unitsRef = database.getReference("Units");
-        final DatabaseReference problemsRef = database.getReference("Problems");
+        final DatabaseReference unitsRef = database.getReference(Constants.FIREBASE_UNITS_ROOT);
+        final DatabaseReference problemsRef = database.getReference(Constants.FIREBASE_PROBLEMS_ROOT);
 
         final EditText enterUnitEditText = (EditText) findViewById(R.id.enterUnitEditText);
         final Button createUnitButton = (Button) findViewById(R.id.createUnitButton);

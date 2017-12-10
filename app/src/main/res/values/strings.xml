@@ -40,4 +40,6 @@
     <string name="coursename">CourseName</string>
     <string name="problemname">ProblemName</string>
     <string name="unitname">UnitName</string>
+    <string name="image_button_for_solution">Image button for solution</string>
+    <string name="image_button_for_problem">Image button for problem</string>
 </resources>

@@ -57,8 +57,8 @@
                 app:layout_constraintStart_toEndOf="@+id/problemEditText"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/imageView2"
+            <ImageButton
+                android:id="@+id/problemImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
@@ -71,7 +71,7 @@
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@+id/captureProblemPhotoButton"
-                android:contentDescription="@string/captures_photo_for_problem" />
+                android:contentDescription="@string/image_button_for_problem" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -116,7 +116,7 @@
             android:textStyle="italic" />
 
         <android.support.constraint.ConstraintLayout
-            android:layout_width="wrap_content"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="horizontal">
 
@@ -130,7 +130,7 @@
                 android:ems="10"
                 android:hint="@string/enter_solution_proof_response_etc"
                 android:inputType="textPersonName"
-                app:layout_constraintBottom_toTopOf="@+id/solutionImageView"
+                app:layout_constraintBottom_toTopOf="@+id/solutionImageButton"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent" />
 
@@ -140,26 +140,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
+                android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
                 android:text="@string/capture_photo"
-                app:layout_constraintBottom_toTopOf="@+id/solutionImageView"
+                app:layout_constraintBottom_toTopOf="@+id/solutionImageButton"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toEndOf="@+id/solutionEditText"
                 app:layout_constraintTop_toTopOf="parent" />
 
-            <ImageView
-                android:id="@+id/solutionImageView"
+            <ImageButton
+                android:id="@+id/solutionImageButton"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="8dp"
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
+                android:contentDescription="@string/image_button_for_solution"
                 android:src="@mipmap/ic_launcher"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toStartOf="parent"
-                android:contentDescription="@string/imageview_for_solution" />
+                app:layout_constraintStart_toStartOf="parent" />
         </android.support.constraint.ConstraintLayout>
 
         <Button

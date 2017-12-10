@@ -42,4 +42,5 @@
     <string name="unitname">UnitName</string>
     <string name="image_button_for_solution">Image button for solution</string>
     <string name="image_button_for_problem">Image button for problem</string>
+    <string name="image_to_display_if_problem_is_an_image">Image to display if problem is an image</string>
 </resources>

@@ -7,6 +7,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -16,6 +17,7 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.GenericTypeIndicator;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -31,7 +33,11 @@ public class QuizQuestionActivity extends AppCompatActivity {
     private Map<String, Unit> keyToUnitMap = new HashMap<>();
     private Map<String, Problem> keyToProblemMap = new HashMap<>();
     private TextView quizProblemTextView;
-    private ImageView quizProblemImageView;
+    private ImageView quizProblemImageButton;
+    private EditText enterAnswerEditText;
+    private Button checkAnswerButton;
+    private Button viewSolutionButton;
+    private Button giveUpButton;
     private Problem randomQuizProblem;
 
     @Override
@@ -45,15 +51,21 @@ public class QuizQuestionActivity extends AppCompatActivity {
         }
 
         quizProblemTextView = (TextView) findViewById(R.id.quizProblemTextView);
-        quizProblemImageView = (ImageView) findViewById(R.id.quizProblemImageButton);
-        final EditText enterAnswerEditText = (EditText) findViewById(R.id.enterAnswerEditText);
-        final Button checkAnswerButton = (Button) findViewById(R.id.checkAnswerButton);
-        final Button viewSolutionButton = (Button) findViewById(R.id.viewSolutionButton);
-        final Button giveUpButton = (Button) findViewById(R.id.giveUpButton);
+        quizProblemImageButton = (ImageButton) findViewById(R.id.quizProblemImageButton);
+        enterAnswerEditText = (EditText) findViewById(R.id.enterAnswerEditText);
+        checkAnswerButton = (Button) findViewById(R.id.checkAnswerButton);
+        viewSolutionButton = (Button) findViewById(R.id.viewSolutionButton);
+        giveUpButton = (Button) findViewById(R.id.giveUpButton);
 
-        /*Hide buttons as necessary
-         */
+        setUpButtons();
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        final DatabaseReference unitsRef = database.getReference(Constants.FIREBASE_UNITS_ROOT).child(unitsKey);
+        final DatabaseReference problemsRef = database.getReference(Constants.FIREBASE_PROBLEMS_ROOT);
+        readProblemsFromDatabaseAndDisplayRandomProblem(unitsRef, problemsRef);
 
+    }
+
+    private void setUpButtons() {
         checkAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -63,7 +75,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
 
                 } else {
                     Intent revealAnswerIntent = new Intent(v.getContext(), RevealSolutionActivity.class);
-                    //Send problem and the answer the user typed in
+                    revealAnswerIntent.putExtra(Constants.PARCELABLE_EXTRA, randomQuizProblem);
                     startActivity(revealAnswerIntent);
                 }
             }
@@ -73,7 +85,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent viewSolutionIntent = new Intent(v.getContext(), RevealSolutionActivity.class);
-                //send problem
+                viewSolutionIntent.putExtra(Constants.PARCELABLE_EXTRA, randomQuizProblem);
                 startActivity(viewSolutionIntent);
             }
         });
@@ -82,15 +94,10 @@ public class QuizQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Intent viewSolutionIntent = new Intent(v.getContext(), RevealSolutionActivity.class);
-                //send problem
+                viewSolutionIntent.putExtra(Constants.PARCELABLE_EXTRA, randomQuizProblem);
                 startActivity(viewSolutionIntent);
             }
         });
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference unitsRef = database.getReference("Units").child(unitsKey);
-        final DatabaseReference problemsRef = database.getReference("Problems");
-        readProblemsFromDatabaseAndDisplayRandomProblem(unitsRef, problemsRef);
-
     }
 
     //https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
@@ -164,11 +171,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 if (isLastUnit) {
                     randomQuizProblem = selectRandomProblem();
 
-                    if (randomQuizProblem != null) {
-                        quizProblemTextView.setText(randomQuizProblem.getProblem());
-                    } else {
-                        quizProblemTextView.setText(R.string.noProblems);
-                    }
+                    updateUserInterfaceWithRandomProblem();
                 }
             }
 
@@ -177,6 +180,38 @@ public class QuizQuestionActivity extends AppCompatActivity {
 
             }
         });
+    }
+
+    private void updateUserInterfaceWithRandomProblem() {
+        if (randomQuizProblem == null) {
+            quizProblemTextView.setText(R.string.noProblems);
+            return;
+        }
+
+        //Set up problem display
+        if (randomQuizProblem.getProblem().startsWith(Constants.FIREBASE_STORAGE_URL)) {
+            quizProblemTextView.setVisibility(View.GONE);
+            Picasso.with(quizProblemImageButton.getContext())
+                    .load(randomQuizProblem.getProblem()).into(quizProblemImageButton);
+        } else {
+            quizProblemImageButton.setVisibility(View.GONE);
+            quizProblemTextView.setText(randomQuizProblem.getProblem());
+        }
+
+        //hide answer button and EditText if there is no answer
+        if (randomQuizProblem.getAnswer().equals("")) {
+            enterAnswerEditText.setVisibility(View.GONE);
+            checkAnswerButton.setVisibility(View.GONE);
+            giveUpButton.setVisibility(View.GONE);
+        } else {
+            viewSolutionButton.setVisibility(View.GONE);
+        }
+
+        //case where there is an answer and no solution
+        if (randomQuizProblem.getSolution().equals("")) {
+            viewSolutionButton.setVisibility(View.GONE);
+        }
+
     }
 
     private Problem selectRandomProblem() {

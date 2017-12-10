@@ -48,7 +48,7 @@ public class ProblemViewHolder extends RecyclerView.ViewHolder implements View.O
     public void onClick(View v) {
         Context context = v.getContext();
         Intent viewProblemDetailIntent = new Intent(context, ProblemDetailActivity.class);
-        viewProblemDetailIntent.putExtra("parcelable_extra", currentProblem);
+        viewProblemDetailIntent.putExtra(Constants.PARCELABLE_EXTRA, currentProblem);
         context.startActivity(viewProblemDetailIntent);
     }
 }

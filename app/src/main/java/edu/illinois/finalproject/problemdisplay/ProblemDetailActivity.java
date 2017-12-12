@@ -1,6 +1,7 @@
 package edu.illinois.finalproject.problemdisplay;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
@@ -14,6 +15,7 @@ import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.R;
 
 public class ProblemDetailActivity extends AppCompatActivity {
+    private Problem currentProblem;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,8 +24,7 @@ public class ProblemDetailActivity extends AppCompatActivity {
 
         Intent intentThatLaunchedThisActivity = getIntent();
         if (intentThatLaunchedThisActivity.hasExtra(Constants.PARCELABLE_EXTRA)) {
-            final Problem currentProblem =
-                    intentThatLaunchedThisActivity.getParcelableExtra(Constants.PARCELABLE_EXTRA);
+            currentProblem = intentThatLaunchedThisActivity.getParcelableExtra(Constants.PARCELABLE_EXTRA);
 
             final TextView displayProblemTextView = (TextView) findViewById(R.id.displayProblemTextView);
             final ImageButton problemImageButton = (ImageButton) findViewById(R.id.problemImageButton);
@@ -50,6 +51,32 @@ public class ProblemDetailActivity extends AppCompatActivity {
                 solutionImageButton.setVisibility(View.GONE);
                 displaySolutionTextView.setText(currentProblem.getSolution());
             }
+
+            problemImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewImageInGallery(currentProblem.getProblem());
+                }
+            });
+
+            solutionImageButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    viewImageInGallery(currentProblem.getSolution());
+                }
+            });
         }
+    }
+
+    /**
+     * Opens jpeg image at given URL in suitable photo gallery on user's device.
+     * @param urlString url string for downloading jpeg image.
+     */
+    private void viewImageInGallery(String urlString) {
+        //Derived from https://stackoverflow.com/questions/5383797/open-an-image-using-uri-in-androids-default-gallery-image-viewer
+        Intent viewImageInGalleryIntent = new Intent();
+        viewImageInGalleryIntent.setAction(Intent.ACTION_VIEW);
+        viewImageInGalleryIntent.setDataAndType(Uri.parse(urlString), "image/jpeg");
+        startActivity(viewImageInGalleryIntent);
     }
 }

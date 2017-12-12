@@ -22,12 +22,12 @@
             android:textSize="36sp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toTopOf="parent" />
+            app:layout_constraintTop_toBottomOf="@+id/quizProblemImageButton" />
 
         <ImageButton
             android:id="@+id/quizProblemImageButton"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
+            android:layout_width="200dp"
+            android:layout_height="200dp"
             android:layout_marginEnd="8dp"
             android:layout_marginStart="8dp"
             android:layout_marginTop="8dp"
@@ -35,7 +35,7 @@
             android:elevation="24dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quizProblemTextView"
+            app:layout_constraintTop_toTopOf="parent"
             app:srcCompat="@mipmap/ic_launcher" />
 
         <EditText
@@ -50,7 +50,7 @@
             android:inputType="textPersonName"
             app:layout_constraintEnd_toStartOf="@+id/checkAnswerButton"
             app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quizProblemImageButton" />
+            app:layout_constraintTop_toBottomOf="@+id/quizProblemTextView" />
 
         <Button
             android:id="@+id/checkAnswerButton"
@@ -60,7 +60,7 @@
             android:layout_marginTop="8dp"
             android:text="@string/check_answer"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toBottomOf="@+id/quizProblemImageButton" />
+            app:layout_constraintTop_toBottomOf="@+id/quizProblemTextView" />
 
         <Button
             android:id="@+id/viewSolutionButton"

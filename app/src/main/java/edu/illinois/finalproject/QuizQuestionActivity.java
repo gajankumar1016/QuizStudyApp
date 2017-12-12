@@ -115,6 +115,13 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 startActivity(viewSolutionIntent);
             }
         });
+
+        quizProblemImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewImage.viewImageInGallery(randomQuizProblem.getProblem(), v.getContext());
+            }
+        });
     }
 
     //https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android

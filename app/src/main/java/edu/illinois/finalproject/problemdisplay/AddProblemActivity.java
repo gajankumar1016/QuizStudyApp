@@ -31,6 +31,7 @@ import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
 import edu.illinois.finalproject.Constants;
+import edu.illinois.finalproject.ViewImage;
 import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.DatabaseUtils;
 import edu.illinois.finalproject.R;
@@ -264,6 +265,13 @@ public class AddProblemActivity extends AppCompatActivity {
         }
 
         currentImageButton.setVisibility(View.VISIBLE);
+
+        currentImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewImage.viewImageInGallery(mostRecentPhotoPath, v.getContext());
+            }
+        });
 
         //Display the captured image in the ImageView
         Picasso.with(currentImageButton.getContext())

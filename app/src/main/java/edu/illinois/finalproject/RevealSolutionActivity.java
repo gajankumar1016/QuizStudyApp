@@ -63,5 +63,13 @@ public class RevealSolutionActivity extends AppCompatActivity {
                 displaySolutionTextView.setText(quizProblem.getSolution());
             }
         }
+
+        //The button will be GONE if the solution is not a download url
+        solutionImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ViewImage.viewImageInGallery(quizProblem.getSolution(), v.getContext());
+            }
+        });
     }
 }

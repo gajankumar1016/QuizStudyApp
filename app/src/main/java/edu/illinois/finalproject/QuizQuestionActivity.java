@@ -72,11 +72,19 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 String userAnswer = enterAnswerEditText.getText().toString();
                 if (userAnswer.equals("")) {
                     Toast.makeText(v.getContext(), "Enter an answer", Toast.LENGTH_LONG).show();
+                    return;
+                }
 
-                } else {
+                //At this point the user has entered a nonempty answer
+                if (userAnswer.equals(randomQuizProblem.getAnswer())) {
+                    String successMessage = "Correct!";
+                    Toast.makeText(v.getContext(), successMessage, Toast.LENGTH_LONG).show();
                     Intent revealAnswerIntent = new Intent(v.getContext(), RevealSolutionActivity.class);
                     revealAnswerIntent.putExtra(Constants.PARCELABLE_EXTRA, randomQuizProblem);
                     startActivity(revealAnswerIntent);
+                } else {
+                    String failureMessage = "Incorrect answer. Try again.";
+                    Toast.makeText(v.getContext(), failureMessage, Toast.LENGTH_LONG).show();
                 }
             }
         });

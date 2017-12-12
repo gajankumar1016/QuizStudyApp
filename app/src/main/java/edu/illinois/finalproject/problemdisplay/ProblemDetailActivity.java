@@ -21,9 +21,9 @@ public class ProblemDetailActivity extends AppCompatActivity {
         setContentView(R.layout.activity_problem_detail);
 
         Intent intentThatLaunchedThisActivity = getIntent();
-        if (intentThatLaunchedThisActivity.hasExtra("parcelable_extra")) {
+        if (intentThatLaunchedThisActivity.hasExtra(Constants.PARCELABLE_EXTRA)) {
             final Problem currentProblem =
-                    intentThatLaunchedThisActivity.getParcelableExtra("parcelable_extra");
+                    intentThatLaunchedThisActivity.getParcelableExtra(Constants.PARCELABLE_EXTRA);
 
             final TextView displayProblemTextView = (TextView) findViewById(R.id.displayProblemTextView);
             final ImageButton problemImageButton = (ImageButton) findViewById(R.id.problemImageButton);

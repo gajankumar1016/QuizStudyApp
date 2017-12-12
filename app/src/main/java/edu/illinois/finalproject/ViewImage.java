@@ -5,9 +5,8 @@ import android.content.Intent;
 import android.net.Uri;
 
 /**
- * Created by gajan on 12/12/2017.
+ * Class with static method to allow users to click on an ImageButton and open the image in a gallery.
  */
-
 public class ViewImage {
 
     /**

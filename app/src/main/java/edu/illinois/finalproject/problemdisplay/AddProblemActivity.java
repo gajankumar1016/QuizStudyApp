@@ -39,7 +39,12 @@ import edu.illinois.finalproject.unitdisplay.OnGetUrlListener;
 
 public class AddProblemActivity extends AppCompatActivity {
     private String problemsKey;
-    //Used as request code when launching and then receiving results from the camera app
+
+    //used to check for image path if user rotates device
+    private static final String MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA = "most recent problem photo path";
+    private static final String MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA = "most recent solution photo path";
+
+    //used as request code when launching and then receiving results from the camera app
     private static final int REQUEST_PROBLEM_IMAGE = 1;
     private static final int REQUEST_SOLUTION_IMAGE = 2;
 
@@ -92,7 +97,26 @@ public class AddProblemActivity extends AppCompatActivity {
 
         setUpCapturePhotoButtons();
 
+        setUpImageButtons();
+
         setUpCreateButton();
+
+        //Reload images if the user has just rotated the device
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA)) {
+                mostRecentProblemPhotoPath = savedInstanceState.getString(MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA);
+                Picasso.with(problemImageButton.getContext())
+                        .load(mostRecentProblemPhotoPath).into(problemImageButton);
+                problemImageButton.setVisibility(View.VISIBLE);
+            }
+
+            if (savedInstanceState.containsKey(MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA)) {
+                mostRecentSolutionPhotoPath = savedInstanceState.getString(MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA);
+                Picasso.with(solutionImageButton.getContext())
+                        .load(mostRecentSolutionPhotoPath).into(solutionImageButton);
+                solutionImageButton.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     private void setUpCapturePhotoButtons() {
@@ -107,6 +131,27 @@ public class AddProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 dispatchTakePictureIntent(REQUEST_SOLUTION_IMAGE);
+            }
+        });
+    }
+
+    private void setUpImageButtons() {
+        /*These buttons will only be visible if there is a valid path to a photo*/
+        problemImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mostRecentProblemPhotoPath != null) {
+                    ViewImage.viewImageInGallery(mostRecentProblemPhotoPath, v.getContext());
+                }
+            }
+        });
+
+        solutionImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (mostRecentSolutionPhotoPath != null) {
+                    ViewImage.viewImageInGallery(mostRecentSolutionPhotoPath, v.getContext());
+                }
             }
         });
     }
@@ -265,20 +310,13 @@ public class AddProblemActivity extends AppCompatActivity {
         }
 
         currentImageButton.setVisibility(View.VISIBLE);
-
-        currentImageButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ViewImage.viewImageInGallery(mostRecentPhotoPath, v.getContext());
-            }
-        });
-
         //Display the captured image in the ImageView
         Picasso.with(currentImageButton.getContext())
                 .load(mostRecentPhotoPath).into(currentImageButton);
     }
 
-    private void pushImageToDatabaseAndSetDownloadUrl(String pathToFile, final Problem newProblem, final boolean isLastUpload, final int requestCode) {
+    private void pushImageToDatabaseAndSetDownloadUrl(String pathToFile, final Problem newProblem,
+                                                      final boolean isLastUpload, final int requestCode) {
         new DatabaseUtils().uploadImage(pathToFile, mStorageRef, new OnGetUrlListener() {
             @Override
             public void onStart() {
@@ -325,5 +363,17 @@ public class AddProblemActivity extends AppCompatActivity {
      */
     private void displayToast(String message) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show();
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (mostRecentProblemPhotoPath != null) {
+            outState.putString(MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA, mostRecentProblemPhotoPath);
+        }
+
+        if (mostRecentSolutionPhotoPath != null) {
+            outState.putString(MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA, mostRecentSolutionPhotoPath);
+        }
     }
 }

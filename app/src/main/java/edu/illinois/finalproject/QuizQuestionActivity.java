@@ -45,6 +45,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_question);
 
+
         Intent intentThatStartedThisActivity = getIntent();
         if (intentThatStartedThisActivity.hasExtra(Intent.EXTRA_TEXT)) {
             unitsKey = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
@@ -56,13 +57,21 @@ public class QuizQuestionActivity extends AppCompatActivity {
         checkAnswerButton = (Button) findViewById(R.id.checkAnswerButton);
         viewSolutionButton = (Button) findViewById(R.id.viewSolutionButton);
         giveUpButton = (Button) findViewById(R.id.giveUpButton);
-
         setUpButtons();
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        final DatabaseReference unitsRef = database.getReference(Constants.FIREBASE_UNITS_ROOT).child(unitsKey);
-        final DatabaseReference problemsRef = database.getReference(Constants.FIREBASE_PROBLEMS_ROOT);
-        readProblemsFromDatabaseAndDisplayRandomProblem(unitsRef, problemsRef);
 
+        //preserve quiz problem after a rotation or generate random quiz problem
+        // if the activity was just launched from previous activity
+        if (savedInstanceState != null) {
+            if (savedInstanceState.containsKey(Constants.PARCELABLE_EXTRA)) {
+                randomQuizProblem = savedInstanceState.getParcelable(Constants.PARCELABLE_EXTRA);
+                updateUserInterfaceWithRandomProblem();
+            }
+        } else {
+            FirebaseDatabase database = FirebaseDatabase.getInstance();
+            final DatabaseReference unitsRef = database.getReference(Constants.FIREBASE_UNITS_ROOT).child(unitsKey);
+            final DatabaseReference problemsRef = database.getReference(Constants.FIREBASE_PROBLEMS_ROOT);
+            readProblemsFromDatabaseAndDisplayRandomProblem(unitsRef, problemsRef);
+        }
     }
 
     private void setUpButtons() {
@@ -231,5 +240,13 @@ public class QuizQuestionActivity extends AppCompatActivity {
         List<Problem> problemList = new ArrayList<>(keyToProblemMap.values());
         Log.d("Quiz Questions", problemList.get(randomIndex).toString());
         return problemList.get(randomIndex);
+    }
+
+    @Override
+    protected void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        if (randomQuizProblem != null) {
+            outState.putParcelable(Constants.PARCELABLE_EXTRA, randomQuizProblem);
+        }
     }
 }

@@ -65,13 +65,14 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:layout_marginTop="8dp"
+                android:contentDescription="@string/image_button_for_problem"
+                android:elevation="24dp"
                 android:src="@mipmap/ic_launcher"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@+id/captureProblemPhotoButton"
-                android:contentDescription="@string/image_button_for_problem" />
+                app:layout_constraintTop_toBottomOf="@+id/captureProblemPhotoButton" />
 
         </android.support.constraint.ConstraintLayout>
 
@@ -156,6 +157,7 @@
                 android:layout_marginEnd="8dp"
                 android:layout_marginStart="8dp"
                 android:contentDescription="@string/image_button_for_solution"
+                android:elevation="24dp"
                 android:src="@mipmap/ic_launcher"
                 android:visibility="gone"
                 app:layout_constraintBottom_toBottomOf="parent"

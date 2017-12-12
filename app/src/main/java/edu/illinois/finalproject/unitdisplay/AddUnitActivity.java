@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.UnitDisplayImplementation;
+package edu.illinois.finalproject.unitdisplay;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
@@ -12,7 +12,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import edu.illinois.finalproject.Constants;
-import edu.illinois.finalproject.DatabaseObjects.Unit;
+import edu.illinois.finalproject.database.Unit;
 import edu.illinois.finalproject.R;
 
 public class AddUnitActivity extends AppCompatActivity {

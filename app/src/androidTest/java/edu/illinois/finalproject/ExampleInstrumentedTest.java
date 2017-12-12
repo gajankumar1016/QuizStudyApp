@@ -23,11 +23,11 @@ import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 
-import edu.illinois.finalproject.DatabaseObjects.Course;
-import edu.illinois.finalproject.DatabaseObjects.CourseOfUnits;
-import edu.illinois.finalproject.DatabaseObjects.Problem;
-import edu.illinois.finalproject.DatabaseObjects.Unit;
-import edu.illinois.finalproject.DatabaseObjects.UnitOfProblems;
+import edu.illinois.finalproject.database.Course;
+import edu.illinois.finalproject.database.CourseOfUnits;
+import edu.illinois.finalproject.database.Problem;
+import edu.illinois.finalproject.database.Unit;
+import edu.illinois.finalproject.database.UnitOfProblems;
 
 import static org.junit.Assert.*;
 

@@ -23,15 +23,15 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".CourseDisplayImplementation.ViewCoursesActivity" />
-        <activity android:name=".CourseDisplayImplementation.AddCourseActivity" />
-        <activity android:name=".UnitDisplayImplementation.ViewUnitsActivity" />
-        <activity android:name=".UnitDisplayImplementation.AddUnitActivity" />
-        <activity android:name=".ProblemDisplayImplementation.ViewProblemsActivity" />
-        <activity android:name=".ProblemDisplayImplementation.AddProblemActivity" />
+        <activity android:name=".coursedisplay.ViewCoursesActivity" />
+        <activity android:name=".coursedisplay.AddCourseActivity" />
+        <activity android:name=".unitdisplay.ViewUnitsActivity" />
+        <activity android:name=".unitdisplay.AddUnitActivity" />
+        <activity android:name=".problemdisplay.ViewProblemsActivity" />
+        <activity android:name=".problemdisplay.AddProblemActivity" />
         <activity android:name=".QuizQuestionActivity" />
         <activity android:name=".RevealSolutionActivity" />
-        <activity android:name=".ProblemDisplayImplementation.ProblemDetailActivity"></activity>
+        <activity android:name=".problemdisplay.ProblemDetailActivity"></activity>
 
         <provider
             android:name="android.support.v4.content.FileProvider"

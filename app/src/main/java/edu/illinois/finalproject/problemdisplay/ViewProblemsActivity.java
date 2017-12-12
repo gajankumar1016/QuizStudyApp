@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.ProblemDisplayImplementation;
+package edu.illinois.finalproject.problemdisplay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -14,7 +14,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 
 import edu.illinois.finalproject.Constants;
-import edu.illinois.finalproject.DatabaseObjects.Problem;
+import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.R;
 
 public class ViewProblemsActivity extends AppCompatActivity {

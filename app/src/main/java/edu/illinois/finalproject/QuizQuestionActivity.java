@@ -25,8 +25,8 @@ import java.util.List;
 import java.util.Map;
 import java.util.Random;
 
-import edu.illinois.finalproject.DatabaseObjects.Problem;
-import edu.illinois.finalproject.DatabaseObjects.Unit;
+import edu.illinois.finalproject.database.Problem;
+import edu.illinois.finalproject.database.Unit;
 
 public class QuizQuestionActivity extends AppCompatActivity {
     private String unitsKey;

@@ -1,19 +1,16 @@
-package edu.illinois.finalproject.ProblemDisplayImplementation;
+package edu.illinois.finalproject.problemdisplay;
 
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.squareup.picasso.Picasso;
 
-import org.w3c.dom.Text;
-
 import edu.illinois.finalproject.Constants;
-import edu.illinois.finalproject.DatabaseObjects.Problem;
+import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.R;
 
 public class ProblemDetailActivity extends AppCompatActivity {

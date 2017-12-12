@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.UnitDisplayImplementation;
+package edu.illinois.finalproject.unitdisplay;
 
 import android.support.annotation.NonNull;
 

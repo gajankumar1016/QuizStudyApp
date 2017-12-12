@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.ProblemDisplayImplementation;
+package edu.illinois.finalproject.problemdisplay;
 
 import android.content.Context;
 import android.content.Intent;
@@ -10,7 +10,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import edu.illinois.finalproject.Constants;
-import edu.illinois.finalproject.DatabaseObjects.Problem;
+import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.R;
 
 /**

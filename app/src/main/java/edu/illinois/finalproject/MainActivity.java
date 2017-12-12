@@ -7,7 +7,7 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
 
-import edu.illinois.finalproject.CourseDisplayImplementation.ViewCoursesActivity;
+import edu.illinois.finalproject.coursedisplay.ViewCoursesActivity;
 
 public class MainActivity extends AppCompatActivity {
 

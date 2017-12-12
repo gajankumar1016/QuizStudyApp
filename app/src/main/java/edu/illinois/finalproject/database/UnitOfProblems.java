@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.DatabaseObjects;
+package edu.illinois.finalproject.database;
 
 import java.util.List;
 

@@ -1,4 +1,4 @@
-package edu.illinois.finalproject.ProblemDisplayImplementation;
+package edu.illinois.finalproject.problemdisplay;
 
 import android.content.Intent;
 import android.net.Uri;
@@ -16,7 +16,6 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
-import com.google.android.gms.tasks.Task;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.storage.FirebaseStorage;
@@ -32,10 +31,10 @@ import java.util.Locale;
 import java.util.concurrent.CountDownLatch;
 
 import edu.illinois.finalproject.Constants;
-import edu.illinois.finalproject.DatabaseObjects.Problem;
+import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.DatabaseUtils;
 import edu.illinois.finalproject.R;
-import edu.illinois.finalproject.UnitDisplayImplementation.OnGetUrlListener;
+import edu.illinois.finalproject.unitdisplay.OnGetUrlListener;
 
 public class AddProblemActivity extends AppCompatActivity {
     private String problemsKey;

@@ -11,6 +11,7 @@ import android.widget.TextView;
 import com.squareup.picasso.Picasso;
 
 import edu.illinois.finalproject.Constants;
+import edu.illinois.finalproject.ViewImage;
 import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.R;
 
@@ -55,28 +56,16 @@ public class ProblemDetailActivity extends AppCompatActivity {
             problemImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewImageInGallery(currentProblem.getProblem());
+                    ViewImage.viewImageInGallery(currentProblem.getProblem(), v.getContext());
                 }
             });
 
             solutionImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    viewImageInGallery(currentProblem.getSolution());
+                    ViewImage.viewImageInGallery(currentProblem.getSolution(), v.getContext());
                 }
             });
         }
-    }
-
-    /**
-     * Opens jpeg image at given URL in suitable photo gallery on user's device.
-     * @param urlString url string for downloading jpeg image.
-     */
-    private void viewImageInGallery(String urlString) {
-        //Derived from https://stackoverflow.com/questions/5383797/open-an-image-using-uri-in-androids-default-gallery-image-viewer
-        Intent viewImageInGalleryIntent = new Intent();
-        viewImageInGalleryIntent.setAction(Intent.ACTION_VIEW);
-        viewImageInGalleryIntent.setDataAndType(Uri.parse(urlString), "image/jpeg");
-        startActivity(viewImageInGalleryIntent);
     }
 }

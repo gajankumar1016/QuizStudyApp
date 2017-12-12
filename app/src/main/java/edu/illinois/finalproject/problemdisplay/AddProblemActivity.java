@@ -38,8 +38,6 @@ import edu.illinois.finalproject.unitdisplay.OnGetUrlListener;
 
 public class AddProblemActivity extends AppCompatActivity {
     private String problemsKey;
-    //Used to save path to current photo when user rotates the device
-    private static final String CURRENT_PHOTO_PATH_TEXT_KEY = "currentPhotoPath";
     //Used as request code when launching and then receiving results from the camera app
     private static final int REQUEST_PROBLEM_IMAGE = 1;
     private static final int REQUEST_SOLUTION_IMAGE = 2;

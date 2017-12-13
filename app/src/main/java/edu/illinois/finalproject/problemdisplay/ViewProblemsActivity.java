@@ -20,6 +20,7 @@ import edu.illinois.finalproject.R;
 public class ViewProblemsActivity extends AppCompatActivity {
     private String keyToProblems;
     private Button addNewProblemButton;
+    private FirebaseRecyclerAdapter problemAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,22 +33,7 @@ public class ViewProblemsActivity extends AppCompatActivity {
             keyToProblems = intentThatStartedThisActivity.getStringExtra(Intent.EXTRA_TEXT);
         }
 
-        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
-        DatabaseReference problemsOfThisUnitRef = firebaseDatabase.getReference(Constants.FIREBASE_PROBLEMS_ROOT).child(keyToProblems);
-
-        final RecyclerView unitRecycler = (RecyclerView) findViewById(R.id.problemsRecyclerView);
-        FirebaseRecyclerAdapter<Problem, ProblemViewHolder> problemAdapter =
-                new FirebaseRecyclerAdapter<Problem, ProblemViewHolder>(
-                        Problem.class, R.layout.problem_item, ProblemViewHolder.class, problemsOfThisUnitRef) {
-                    @Override
-                    protected void populateViewHolder(ProblemViewHolder viewHolder, Problem model, int position) {
-                        viewHolder.bindProblem(model);
-                    }
-                };
-
-        unitRecycler.setHasFixedSize(true);
-        unitRecycler.setLayoutManager(new LinearLayoutManager(this));
-        unitRecycler.setAdapter(problemAdapter);
+        setUpFirebaseAdapter();
 
         addNewProblemButton = (Button) findViewById(R.id.addNewProblemButton);
         addNewProblemButton.setOnClickListener(new View.OnClickListener() {
@@ -59,5 +45,30 @@ public class ViewProblemsActivity extends AppCompatActivity {
                 startActivity(addUnitIntent);
             }
         });
+    }
+
+    private void setUpFirebaseAdapter() {
+        FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
+        DatabaseReference problemsOfThisUnitRef =
+                firebaseDatabase.getReference(Constants.FIREBASE_PROBLEMS_ROOT).child(keyToProblems);
+
+        final RecyclerView unitRecycler = (RecyclerView) findViewById(R.id.problemsRecyclerView);
+        problemAdapter = new FirebaseRecyclerAdapter<Problem, ProblemViewHolder>(
+                        Problem.class, R.layout.problem_item, ProblemViewHolder.class, problemsOfThisUnitRef) {
+                    @Override
+                    protected void populateViewHolder(ProblemViewHolder viewHolder, Problem model, int position) {
+                        viewHolder.bindProblem(model);
+                    }
+                };
+
+        unitRecycler.setHasFixedSize(true);
+        unitRecycler.setLayoutManager(new LinearLayoutManager(this));
+        unitRecycler.setAdapter(problemAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        problemAdapter.cleanup();
     }
 }

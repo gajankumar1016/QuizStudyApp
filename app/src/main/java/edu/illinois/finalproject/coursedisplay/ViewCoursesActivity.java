@@ -20,9 +20,8 @@ import edu.illinois.finalproject.R;
 
 public class ViewCoursesActivity extends AppCompatActivity {
 
-    private View itemView;
-    private TextView courseTextView;
     private Button addNewCourseButton;
+    private FirebaseRecyclerAdapter courseAdapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -30,22 +29,7 @@ public class ViewCoursesActivity extends AppCompatActivity {
         setContentView(R.layout.activity_view_courses);
         setTitle("Courses");
 
-        FirebaseDatabase database = FirebaseDatabase.getInstance();
-        DatabaseReference coursesRef = database.getReference(Constants.FIREBASE_COURSES_ROOT);
-
-        final RecyclerView courseRecycler = (RecyclerView) findViewById(R.id.problemsRecyclerView);
-        FirebaseRecyclerAdapter<Course, CourseViewHolder> courseAdapter =
-                new FirebaseRecyclerAdapter<Course, CourseViewHolder>
-                        (Course.class, R.layout.course_item, CourseViewHolder.class, coursesRef) {
-                    @Override
-                    protected void populateViewHolder(CourseViewHolder viewHolder, Course model, int position) {
-                        viewHolder.bindCourse(model);
-                    }
-                };
-
-        courseRecycler.setHasFixedSize(true);
-        courseRecycler.setLayoutManager(new LinearLayoutManager(this));
-        courseRecycler.setAdapter(courseAdapter);
+        setUpFirebaseAdapter();
 
         addNewCourseButton = (Button) findViewById(R.id.addNewCourseButton);
         addNewCourseButton.setOnClickListener(new View.OnClickListener() {
@@ -56,5 +40,29 @@ public class ViewCoursesActivity extends AppCompatActivity {
                 startActivity(addCourseIntent);
             }
         });
+    }
+
+    private void setUpFirebaseAdapter() {
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        DatabaseReference coursesRef = database.getReference(Constants.FIREBASE_COURSES_ROOT);
+
+        final RecyclerView courseRecycler = (RecyclerView) findViewById(R.id.problemsRecyclerView);
+        courseAdapter = new FirebaseRecyclerAdapter<Course, CourseViewHolder>
+                        (Course.class, R.layout.course_item, CourseViewHolder.class, coursesRef) {
+                    @Override
+                    protected void populateViewHolder(CourseViewHolder viewHolder, Course model, int position) {
+                        viewHolder.bindCourse(model);
+                    }
+                };
+
+        courseRecycler.setHasFixedSize(true);
+        courseRecycler.setLayoutManager(new LinearLayoutManager(this));
+        courseRecycler.setAdapter(courseAdapter);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        courseAdapter.cleanup();
     }
 }

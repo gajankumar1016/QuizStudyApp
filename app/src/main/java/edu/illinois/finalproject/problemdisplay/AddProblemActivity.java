@@ -168,8 +168,10 @@ public class AddProblemActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!problemEditText.getText().toString().equals("")) {
                     captureProblemPhotoButton.setVisibility(View.GONE);
+                    problemImageButton.setVisibility(View.GONE);
                 } else {
                     captureProblemPhotoButton.setVisibility(View.VISIBLE);
+                    problemImageButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -189,8 +191,10 @@ public class AddProblemActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!solutionEditText.getText().toString().equals("")) {
                     captureSolutionPhotoButton.setVisibility(View.GONE);
+                    solutionImageButton.setVisibility(View.GONE);
                 } else {
                     captureSolutionPhotoButton.setVisibility(View.VISIBLE);
+                    solutionImageButton.setVisibility(View.GONE);
                 }
             }
 

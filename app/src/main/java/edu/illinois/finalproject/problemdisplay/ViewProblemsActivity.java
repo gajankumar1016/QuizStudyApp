@@ -17,6 +17,10 @@ import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.R;
 
+/**
+ * Activity for viewing problems.
+ * Derived from: https://www.learnhowtoprogram.com/android/data-persistence/firebase-recycleradapter
+ */
 public class ViewProblemsActivity extends AppCompatActivity {
     private String keyToProblems;
     private Button addNewProblemButton;
@@ -47,6 +51,9 @@ public class ViewProblemsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up FirebaseRecyclerAdapter and sets a RecyclerView with the adapter.
+     */
     private void setUpFirebaseAdapter() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference problemsOfThisUnitRef =

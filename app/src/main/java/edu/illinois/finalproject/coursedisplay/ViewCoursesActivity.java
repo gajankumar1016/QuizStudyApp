@@ -18,6 +18,10 @@ import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.database.Course;
 import edu.illinois.finalproject.R;
 
+/**
+ * Activity for viewing courses.
+ * Derived from https://www.learnhowtoprogram.com/android/data-persistence/firebase-recycleradapter
+ */
 public class ViewCoursesActivity extends AppCompatActivity {
 
     private Button addNewCourseButton;
@@ -42,6 +46,9 @@ public class ViewCoursesActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up FirebaseRecyclerAdapter and sets a RecyclerView with the adapter.
+     */
     private void setUpFirebaseAdapter() {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference coursesRef = database.getReference(Constants.FIREBASE_COURSES_ROOT);

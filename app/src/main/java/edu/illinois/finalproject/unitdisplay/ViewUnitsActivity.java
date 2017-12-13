@@ -18,6 +18,10 @@ import edu.illinois.finalproject.database.Unit;
 import edu.illinois.finalproject.QuizQuestionActivity;
 import edu.illinois.finalproject.R;
 
+/**
+ * Activity to view units.
+ * Derived from: https://www.learnhowtoprogram.com/android/data-persistence/firebase-recycleradapter
+ */
 public class ViewUnitsActivity extends AppCompatActivity {
     private String keyToUnits;
     private Button addNewUnitButton;
@@ -60,6 +64,9 @@ public class ViewUnitsActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up FirebaseRecyclerAdapter and sets a RecyclerView with the adapter.
+     */
     private void setUpFirebaseAdapter() {
         FirebaseDatabase firebaseDatabase = FirebaseDatabase.getInstance();
         DatabaseReference unitsOfThisCourseRef = firebaseDatabase.getReference(Constants.FIREBASE_UNITS_ROOT).child(keyToUnits);

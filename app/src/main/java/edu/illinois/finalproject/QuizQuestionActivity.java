@@ -208,8 +208,16 @@ public class QuizQuestionActivity extends AppCompatActivity {
     }
 
     private void updateUserInterfaceWithRandomProblem() {
+        //Handles case where there are no problems in the current course
         if (randomQuizProblem == null) {
             quizProblemTextView.setText(R.string.noProblems);
+
+            //Hide all other components except the message that there are no problems
+            quizProblemImageButton.setVisibility(View.GONE);
+            enterAnswerEditText.setVisibility(View.GONE);
+            checkAnswerButton.setVisibility(View.GONE);
+            viewSolutionButton.setVisibility(View.GONE);
+            giveUpButton.setVisibility(View.GONE);
             return;
         }
 
@@ -239,6 +247,10 @@ public class QuizQuestionActivity extends AppCompatActivity {
 
     }
 
+    /**
+     * Selects a random problem from keyToProblemMap.
+     * @return randomly selected Problem object or null if there are no problems to choose from.
+     */
     private Problem selectRandomProblem() {
         if (keyToProblemMap.size() == 0) {
             return null;

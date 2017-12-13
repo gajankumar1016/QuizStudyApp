@@ -28,6 +28,7 @@ public class ViewCoursesActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_view_courses);
+        setTitle("Courses");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         DatabaseReference coursesRef = database.getReference(Constants.FIREBASE_COURSES_ROOT);

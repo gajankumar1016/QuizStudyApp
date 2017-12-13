@@ -20,6 +20,7 @@ public class AddCourseActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_course);
+        setTitle("Add Course");
 
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         final DatabaseReference coursesRef = database.getReference(Constants.FIREBASE_COURSES_ROOT);

@@ -44,6 +44,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_quiz_question);
+        setTitle("Random Quiz Question");
 
 
         Intent intentThatStartedThisActivity = getIntent();

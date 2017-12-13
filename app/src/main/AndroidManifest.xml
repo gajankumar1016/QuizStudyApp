@@ -23,7 +23,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".coursedisplay.ViewCoursesActivity" />
+        <activity android:name=".coursedisplay.ViewCoursesActivity">
+        </activity>
         <activity android:name=".coursedisplay.AddCourseActivity" />
         <activity android:name=".unitdisplay.ViewUnitsActivity" />
         <activity android:name=".unitdisplay.AddUnitActivity" />

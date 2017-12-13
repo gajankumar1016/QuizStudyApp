@@ -22,6 +22,7 @@ public class ProblemDetailActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_problem_detail);
+        setTitle("Problem Details");
 
         Intent intentThatLaunchedThisActivity = getIntent();
         if (intentThatLaunchedThisActivity.hasExtra(Constants.PARCELABLE_EXTRA)) {

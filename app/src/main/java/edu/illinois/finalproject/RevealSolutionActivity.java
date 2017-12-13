@@ -23,6 +23,7 @@ public class RevealSolutionActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_reveal_solution);
+        setTitle("Answer/Solution");
 
         Intent intentThatLaunchedThisActivity = getIntent();
         if (intentThatLaunchedThisActivity.hasExtra(Constants.PARCELABLE_EXTRA)) {

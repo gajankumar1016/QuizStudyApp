@@ -44,15 +44,15 @@ public class AddProblemActivity extends AppCompatActivity {
     private static final String MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA = "most recent solution photo path";
 
     //used as request code when launching and then receiving results from the camera app
-    private static final int REQUEST_PROBLEM_IMAGE = 1;
-    private static final int REQUEST_SOLUTION_IMAGE = 2;
+    private static final int REQUEST_PROBLEM_IMAGE = 33;
+    private static final int REQUEST_SOLUTION_IMAGE = 111;
 
     private StorageReference mStorageRef;
     //holds path to most recent jpg file for most recent picture taken by the camera
     private String mostRecentPhotoPath;
     private String mostRecentProblemPhotoPath;
     private String mostRecentSolutionPhotoPath;
-    private String currentImageDownloadUrl;
+    private String keyToNewProblem;
 
     private ImageButton problemImageButton;
     private ImageButton solutionImageButton;
@@ -199,10 +199,8 @@ public class AddProblemActivity extends AppCompatActivity {
             public void onTextChanged(CharSequence s, int start, int before, int count) {
                 if (!solutionEditText.getText().toString().equals("")) {
                     captureSolutionPhotoButton.setVisibility(View.GONE);
-                    solutionImageButton.setVisibility(View.GONE);
                 } else {
                     captureSolutionPhotoButton.setVisibility(View.VISIBLE);
-                    solutionImageButton.setVisibility(View.GONE);
                 }
             }
 
@@ -231,27 +229,38 @@ public class AddProblemActivity extends AppCompatActivity {
                 }
 
                 if (answer.equals("") && solutionInputText.equals("") && mostRecentSolutionPhotoPath == null) {
-                    Toast.makeText(v.getContext(), "Enter an answer or solution", Toast.LENGTH_LONG).show();
+                    Toast.makeText(v.getContext(),
+                            "Enter an answer or solution", Toast.LENGTH_LONG).show();
                     return;
                 }
 
                 /*At this point the problem is valid*/
-                //the relevant sets will be overridden if the user inputted an image
+                //the relevant fields will be overridden later if the user inputted an image
                 currentProblem.setProblem(problemInputText);
                 currentProblem.setAnswer(answer);
                 currentProblem.setSolution(solutionInputText);
 
-                if (mostRecentProblemPhotoPath != null) {
-                    boolean isLastUpload = mostRecentSolutionPhotoPath == null;
-                    pushImageToDatabaseAndSetDownloadUrl(mostRecentProblemPhotoPath, currentProblem, isLastUpload, REQUEST_PROBLEM_IMAGE);
+                keyToNewProblem = problemsRef.child(problemsKey).push().getKey();
+                problemsRef.child(problemsKey).child(keyToNewProblem).setValue(currentProblem);
+
+
+                /*Entered text is prioritized over image if both are present*/
+                //Set the problem field to download URL to image if user entered problem as image
+                boolean problemPhotoPresentNoInputText =
+                        mostRecentProblemPhotoPath != null && problemInputText.equals("");
+                if (problemPhotoPresentNoInputText) {
+                    pushImageToDatabaseAndSetDownloadUrl(mostRecentProblemPhotoPath, REQUEST_PROBLEM_IMAGE);
                 }
 
-                if (mostRecentSolutionPhotoPath != null) {
-                    pushImageToDatabaseAndSetDownloadUrl(mostRecentSolutionPhotoPath, currentProblem, true, REQUEST_SOLUTION_IMAGE);
-                } else {
-                    problemsRef.child(problemsKey).push().setValue(currentProblem);
-                    finish();
+                //Set the solution field to download URL to image if user entered solution as image
+                boolean solutionPhotoPresentNoInputText =
+                        mostRecentSolutionPhotoPath != null && solutionInputText.equals("");
+                if (solutionPhotoPresentNoInputText) {
+                    pushImageToDatabaseAndSetDownloadUrl(mostRecentSolutionPhotoPath, REQUEST_SOLUTION_IMAGE);
                 }
+
+                //We can return to previous activity while the uploads are still taking place
+                finish();
             }
         });
     }
@@ -333,8 +342,12 @@ public class AddProblemActivity extends AppCompatActivity {
                 .load(mostRecentPhotoPath).into(currentImageButton);
     }
 
-    private void pushImageToDatabaseAndSetDownloadUrl(String pathToFile, final Problem newProblem,
-                                                      final boolean isLastUpload, final int requestCode) {
+    /**
+     * Uploads image to Firebase and sets the download URL of the problem/solution to the new Problem in Firebase.
+     * @param pathToFile path to local file to upload to Firebase
+     * @param requestCode code to indicate whether the image corresponds to a problem or a solution
+     */
+    private void pushImageToDatabaseAndSetDownloadUrl(String pathToFile, final int requestCode) {
         new DatabaseUtils().uploadImage(pathToFile, mStorageRef, new OnGetUrlListener() {
             @Override
             public void onStart() {
@@ -346,22 +359,19 @@ public class AddProblemActivity extends AppCompatActivity {
                 if (taskSnapshot.getDownloadUrl() != null) {
                     String downloadUrl = taskSnapshot.getDownloadUrl().toString();
                     if (requestCode == REQUEST_PROBLEM_IMAGE) {
-                        newProblem.setProblem(downloadUrl);
+                        problemsRef.child(problemsKey)
+                                .child(keyToNewProblem)
+                                .child(Constants.PROBLEM_FIELD_IN_PROBLEM_OBJECT)
+                                .setValue(downloadUrl);
 
-                        if (isLastUpload) {
-                            problemsRef.child(problemsKey).push().setValue(currentProblem);
-                            finish();
-                        }
                     } else if (requestCode == REQUEST_SOLUTION_IMAGE) {
-                        newProblem.setSolution(downloadUrl);
-
-                        //If the solution is set, it is ready to upload and we can exit this activity
-                        problemsRef.child(problemsKey).push().setValue(currentProblem);
-                        finish();
+                        problemsRef.child(problemsKey)
+                                .child(keyToNewProblem)
+                                .child(Constants.SOLUTION_FIELD_IN_PROBLEM_OBJECT)
+                                .setValue(downloadUrl);
                     }
-                    displayToast("Upload to Firebase succeeded!\n" + downloadUrl);
+                    //displayToast("Upload to Firebase succeeded!\n" + downloadUrl);
                 } else {
-                    currentImageDownloadUrl = null;
                     displayToast("Error: Could not get download URL");
                 }
             }

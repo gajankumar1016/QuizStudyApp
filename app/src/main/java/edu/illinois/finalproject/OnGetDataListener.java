@@ -9,6 +9,8 @@ import com.google.firebase.database.DatabaseError;
  */
 public interface OnGetDataListener {
     public void onStart();
+    /**Takes in/handles DataSnapshot after it is downloaded from Firebase.*/
     public void onSuccess(DataSnapshot dataSnapshot);
+    /**Takes in /handles DatabaseError if one occurs while downloading data from Firebase*/
     public void onFailed(DatabaseError databaseError);
 }

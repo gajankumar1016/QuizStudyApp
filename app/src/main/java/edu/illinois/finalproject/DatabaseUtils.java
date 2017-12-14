@@ -15,12 +15,16 @@ import com.google.firebase.storage.UploadTask;
 import edu.illinois.finalproject.problemdisplay.OnGetUrlListener;
 
 /**
- * Created by gajan on 12/6/2017.
+ * Contains methods to read from and write to Firebase.
  * Derived from https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
  */
-
 public class DatabaseUtils {
-
+    /**
+     * Adds a ValueEventListener to the DatabaseReference and passes a DataSnapshot object to the
+     * onSuccess() method of the anonymous class based off the OnGetDataListener interface.
+     * @param databaseRef DatabaseReference to which the ValueEventListener is to be added
+     * @param listener instantiation of anonymous class based off the OnGetDataListener interface.
+     */
     public void readInFireBaseData(DatabaseReference databaseRef, final OnGetDataListener listener) {
 
         databaseRef.addValueEventListener(new ValueEventListener() {
@@ -37,10 +41,11 @@ public class DatabaseUtils {
     }
 
     /**
-     *
-     * @param pathToFile
-     * @param storageReference
-     * @param listener
+     * Uploads image and passes a UploadTask.TaskSnapshot to the onSuccess() method of the anonymous
+     * class based off the OnGetUrlListener interface.
+     * @param pathToFile path to the image file.
+     * @param storageReference StorageReference where the image is to be stored.
+     * @param listener instantiation of anonymous class based off the OnGetUrlListener interface
      */
     public void uploadImage(final String pathToFile, StorageReference storageReference, final OnGetUrlListener listener) {
         /*Obtains filename*/

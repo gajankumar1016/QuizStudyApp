@@ -26,6 +26,10 @@ public class UnitViewHolder extends RecyclerView.ViewHolder implements View.OnCl
         itemView.setOnClickListener(this);
     }
 
+    /**
+     * Takes in unit and sets the necessary GUI components.
+     * @param unit unit whose name should be displayed in the TextView.
+     */
     public void bindUnit(Unit unit) {
         this.currentUnit = unit;
         unitTextView.setText(unit.getName());

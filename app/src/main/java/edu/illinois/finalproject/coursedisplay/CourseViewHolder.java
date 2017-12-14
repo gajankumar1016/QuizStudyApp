@@ -27,6 +27,10 @@ public class CourseViewHolder extends RecyclerView.ViewHolder implements View.On
         itemView.setOnClickListener(this);
     }
 
+    /**
+     * Takes in course and sets the relevant TextView.
+     * @param course course whose name should be displayed in the TextView.
+     */
     public void bindCourse(Course course) {
         this.currentCourse = course;
         courseTextView.setText(course.getName());

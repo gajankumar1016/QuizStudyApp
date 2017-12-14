@@ -11,6 +11,8 @@ import com.google.firebase.storage.UploadTask;
  */
 public interface OnGetUrlListener {
     public void onStart();
+    /**Takes in/handles UploadTask.TaskSnapshot when an image is uploaded to Firebase successfully.*/
     public void onSuccess(UploadTask.TaskSnapshot taskSnapshot);
+    /**Takes in/handles an Exception that arises when uploading image to Firebase*/
     public void onFailed(@NonNull Exception e);
 }

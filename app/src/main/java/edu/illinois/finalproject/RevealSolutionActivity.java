@@ -39,6 +39,9 @@ public class RevealSolutionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Displays and hides the various GUI components based on the nature of the quiz problem.
+     */
     private void setUpGuiComponents() {
         //Set up/hide necessary answer TextViews
         if (quizProblem.getAnswer().equals("")) {

@@ -38,7 +38,11 @@ public class ProblemDetailActivity extends AppCompatActivity {
             if (currentProblem.getProblem().startsWith(Constants.FIREBASE_STORAGE_URL)) {
                 displayProblemTextView.setVisibility(View.GONE);
                 Picasso.with(problemImageButton.getContext())
-                        .load(currentProblem.getProblem()).into(problemImageButton);
+                        .load(currentProblem.getProblem())
+                        .resize(Constants.PICASSO_TARGET_WIDTH, Constants.PICASSO_TARGET_HEIGHT)
+                        .onlyScaleDown()
+                        .centerInside()
+                        .into(problemImageButton);
             } else {
                 problemImageButton.setVisibility(View.GONE);
                 displayProblemTextView.setText(currentProblem.getProblem());
@@ -50,7 +54,11 @@ public class ProblemDetailActivity extends AppCompatActivity {
             if (currentProblem.getSolution().startsWith(Constants.FIREBASE_STORAGE_URL)) {
                 displaySolutionTextView.setVisibility(View.GONE);
                 Picasso.with(solutionImageButton.getContext())
-                        .load(currentProblem.getSolution()).into(solutionImageButton);
+                        .load(currentProblem.getSolution())
+                        .resize(Constants.PICASSO_TARGET_WIDTH, Constants.PICASSO_TARGET_HEIGHT)
+                        .onlyScaleDown()
+                        .centerInside()
+                        .into(solutionImageButton);
             } else {
                 solutionImageButton.setVisibility(View.GONE);
                 displaySolutionTextView.setText(currentProblem.getSolution());

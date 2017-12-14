@@ -105,7 +105,11 @@ public class AddProblemActivity extends AppCompatActivity {
             if (savedInstanceState.containsKey(MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA)) {
                 mostRecentProblemPhotoPath = savedInstanceState.getString(MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA);
                 Picasso.with(problemImageButton.getContext())
-                        .load(mostRecentProblemPhotoPath).into(problemImageButton);
+                        .load(mostRecentProblemPhotoPath)
+                        .resize(Constants.PICASSO_TARGET_WIDTH, Constants.PICASSO_TARGET_HEIGHT)
+                        .onlyScaleDown()
+                        .centerInside()
+                        .into(problemImageButton);
                 problemImageButton.setVisibility(View.VISIBLE);
             }
 
@@ -113,7 +117,11 @@ public class AddProblemActivity extends AppCompatActivity {
             if (savedInstanceState.containsKey(MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA)) {
                 mostRecentSolutionPhotoPath = savedInstanceState.getString(MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA);
                 Picasso.with(solutionImageButton.getContext())
-                        .load(mostRecentSolutionPhotoPath).into(solutionImageButton);
+                        .load(mostRecentSolutionPhotoPath)
+                        .resize(Constants.PICASSO_TARGET_WIDTH, Constants.PICASSO_TARGET_HEIGHT)
+                        .onlyScaleDown()
+                        .centerInside()
+                        .into(solutionImageButton);
                 solutionImageButton.setVisibility(View.VISIBLE);
             }
         }
@@ -338,7 +346,11 @@ public class AddProblemActivity extends AppCompatActivity {
         currentImageButton.setVisibility(View.VISIBLE);
         //Display the captured image in the ImageView
         Picasso.with(currentImageButton.getContext())
-                .load(mostRecentPhotoPath).into(currentImageButton);
+                .load(mostRecentPhotoPath)
+                .resize(Constants.PICASSO_TARGET_WIDTH, Constants.PICASSO_TARGET_HEIGHT)
+                .onlyScaleDown()
+                .centerInside()
+                .into(currentImageButton);
     }
 
     /**

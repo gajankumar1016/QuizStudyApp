@@ -11,4 +11,6 @@ public class Constants {
     public static final String PARCELABLE_EXTRA = "parcelable_extra";
     public static final String PROBLEM_FIELD_IN_PROBLEM_OBJECT = "problem";
     public static final String SOLUTION_FIELD_IN_PROBLEM_OBJECT = "solution";
+    public static final int PICASSO_TARGET_WIDTH = 750;
+    public static final int PICASSO_TARGET_HEIGHT = 250;
 }

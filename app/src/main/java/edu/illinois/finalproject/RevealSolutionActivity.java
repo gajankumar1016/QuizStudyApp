@@ -40,7 +40,7 @@ public class RevealSolutionActivity extends AppCompatActivity {
     }
 
     /**
-     * Displays and hides the various GUI components based on the nature of the quiz problem.
+     *
      */
     private void setUpGuiComponents() {
         //Set up/hide necessary answer TextViews
@@ -61,7 +61,11 @@ public class RevealSolutionActivity extends AppCompatActivity {
             if (quizProblem.getSolution().startsWith(Constants.FIREBASE_STORAGE_URL)) {
                 displaySolutionTextView.setVisibility(View.GONE);
                 Picasso.with(solutionImageButton.getContext())
-                        .load(quizProblem.getSolution()).into(solutionImageButton);
+                        .load(quizProblem.getSolution())
+                        .resize(Constants.PICASSO_TARGET_WIDTH, Constants.PICASSO_TARGET_HEIGHT)
+                        .onlyScaleDown()
+                        .centerInside()
+                        .into(solutionImageButton);
             } else {
                 solutionImageButton.setVisibility(View.GONE);
                 displaySolutionTextView.setText(quizProblem.getSolution());

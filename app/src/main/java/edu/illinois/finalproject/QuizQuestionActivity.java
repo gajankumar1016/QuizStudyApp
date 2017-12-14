@@ -243,7 +243,11 @@ public class QuizQuestionActivity extends AppCompatActivity {
         if (randomQuizProblem.getProblem().startsWith(Constants.FIREBASE_STORAGE_URL)) {
             quizProblemTextView.setVisibility(View.GONE);
             Picasso.with(quizProblemImageButton.getContext())
-                    .load(randomQuizProblem.getProblem()).into(quizProblemImageButton);
+                    .load(randomQuizProblem.getProblem())
+                    .resize(Constants.PICASSO_TARGET_WIDTH, Constants.PICASSO_TARGET_HEIGHT)
+                    .onlyScaleDown()
+                    .centerInside()
+                    .into(quizProblemImageButton);
         } else {
             quizProblemImageButton.setVisibility(View.GONE);
             quizProblemTextView.setText(randomQuizProblem.getProblem());

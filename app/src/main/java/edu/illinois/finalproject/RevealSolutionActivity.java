@@ -69,7 +69,7 @@ public class RevealSolutionActivity extends AppCompatActivity {
         solutionImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewImage.viewImageInGallery(quizProblem.getSolution(), v.getContext());
+                ViewImage.viewImageInGallery(quizProblem.getSolution(), v.getContext(), getPackageManager());
             }
         });
     }

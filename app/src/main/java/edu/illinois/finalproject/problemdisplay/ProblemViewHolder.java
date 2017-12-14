@@ -31,6 +31,10 @@ public class ProblemViewHolder extends RecyclerView.ViewHolder implements View.O
         itemView.setOnClickListener(this);
     }
 
+    /**
+     * Binds current problem to a problem detail layout.
+     * @param problem Problem object to bind to a detail layout
+     */
     public void bindProblem(Problem problem) {
         this.currentProblem = problem;
         if (currentProblem.getProblem().startsWith(Constants.FIREBASE_STORAGE_URL)) {
@@ -41,7 +45,6 @@ public class ProblemViewHolder extends RecyclerView.ViewHolder implements View.O
             problemImageView.setVisibility(View.GONE);
             problemTextView.setText(currentProblem.getProblem());
         }
-        problemTextView.setText(problem.getProblem());
     }
 
     @Override

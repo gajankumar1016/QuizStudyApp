@@ -28,7 +28,6 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Locale;
-import java.util.concurrent.CountDownLatch;
 
 import edu.illinois.finalproject.Constants;
 import edu.illinois.finalproject.ViewImage;
@@ -69,7 +68,6 @@ public class AddProblemActivity extends AppCompatActivity {
     DatabaseReference problemsRef;
 
     private Problem currentProblem = new Problem();
-    private CountDownLatch countDownLatch;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -104,6 +102,7 @@ public class AddProblemActivity extends AppCompatActivity {
 
         //Reload images if the user has just rotated the device
         if (savedInstanceState != null) {
+            //Reload saved problem photo
             if (savedInstanceState.containsKey(MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA)) {
                 mostRecentProblemPhotoPath = savedInstanceState.getString(MOST_RECENT_PROBLEM_PHOTO_PATH_EXTRA);
                 Picasso.with(problemImageButton.getContext())
@@ -111,6 +110,7 @@ public class AddProblemActivity extends AppCompatActivity {
                 problemImageButton.setVisibility(View.VISIBLE);
             }
 
+            //Reload saved solution photo
             if (savedInstanceState.containsKey(MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA)) {
                 mostRecentSolutionPhotoPath = savedInstanceState.getString(MOST_RECENT_SOLUTION_PHOTO_PATH_EXTRA);
                 Picasso.with(solutionImageButton.getContext())
@@ -120,6 +120,9 @@ public class AddProblemActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets OnClickListeners for the problem and solution photo buttons.
+     */
     private void setUpCapturePhotoButtons() {
         captureProblemPhotoButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -136,13 +139,16 @@ public class AddProblemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets OnClickListeners for the problem and solution ImageButtons.
+     */
     private void setUpImageButtons() {
         /*These buttons will only be visible if there is a valid path to a photo*/
         problemImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (mostRecentProblemPhotoPath != null) {
-                    ViewImage.viewImageInGallery(mostRecentProblemPhotoPath, v.getContext());
+                    ViewImage.viewImageInGallery(mostRecentProblemPhotoPath, v.getContext(), getPackageManager());
                 }
             }
         });
@@ -151,12 +157,15 @@ public class AddProblemActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 if (mostRecentSolutionPhotoPath != null) {
-                    ViewImage.viewImageInGallery(mostRecentSolutionPhotoPath, v.getContext());
+                    ViewImage.viewImageInGallery(mostRecentSolutionPhotoPath, v.getContext(), getPackageManager());
                 }
             }
         });
     }
 
+    /**
+     * Sets up TextWatchers for the problem and solution EditText fields
+     */
     private void setUpTextWatchers() {
         problemEditText.addTextChangedListener(new TextWatcher() {
             @Override
@@ -166,12 +175,11 @@ public class AddProblemActivity extends AppCompatActivity {
 
             @Override
             public void onTextChanged(CharSequence s, int start, int before, int count) {
-                if (!problemEditText.getText().toString().equals("")) {
+                boolean isTextEntered = !problemEditText.getText().toString().equals("");
+                if (isTextEntered) {
                     captureProblemPhotoButton.setVisibility(View.GONE);
-                    problemImageButton.setVisibility(View.GONE);
                 } else {
                     captureProblemPhotoButton.setVisibility(View.VISIBLE);
-                    problemImageButton.setVisibility(View.VISIBLE);
                 }
             }
 
@@ -205,6 +213,10 @@ public class AddProblemActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Sets up OnClickListener for the create button and implements logic to create a problem.
+     * Also prompts user to fill in more fields if necessary.
+     */
     private void setUpCreateButton() {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -310,6 +322,7 @@ public class AddProblemActivity extends AppCompatActivity {
             currentImageButton = problemImageButton;
             mostRecentProblemPhotoPath = mostRecentPhotoPath;
         } else {
+            //If at this point, the request was for a solution image
             currentImageButton = solutionImageButton;
             mostRecentSolutionPhotoPath = mostRecentPhotoPath;
         }

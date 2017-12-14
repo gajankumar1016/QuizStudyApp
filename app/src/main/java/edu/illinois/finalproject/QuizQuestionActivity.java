@@ -120,7 +120,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
         quizProblemImageButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                ViewImage.viewImageInGallery(randomQuizProblem.getProblem(), v.getContext());
+                ViewImage.viewImageInGallery(randomQuizProblem.getProblem(), v.getContext(), getPackageManager());
             }
         });
     }

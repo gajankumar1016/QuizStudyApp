@@ -34,6 +34,7 @@ public class ProblemDetailActivity extends AppCompatActivity {
             final TextView displaySolutionTextView = (TextView) findViewById(R.id.displaySolutionTextView);
             final ImageButton solutionImageButton = (ImageButton) findViewById(R.id.solutionImageButton);
 
+            //Depict problem as either an image or a TextView
             if (currentProblem.getProblem().startsWith(Constants.FIREBASE_STORAGE_URL)) {
                 displayProblemTextView.setVisibility(View.GONE);
                 Picasso.with(problemImageButton.getContext())
@@ -45,6 +46,7 @@ public class ProblemDetailActivity extends AppCompatActivity {
 
             displayAnswerTextView.setText(currentProblem.getAnswer());
 
+            //Display solution as either image or TextView
             if (currentProblem.getSolution().startsWith(Constants.FIREBASE_STORAGE_URL)) {
                 displaySolutionTextView.setVisibility(View.GONE);
                 Picasso.with(solutionImageButton.getContext())
@@ -57,14 +59,14 @@ public class ProblemDetailActivity extends AppCompatActivity {
             problemImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ViewImage.viewImageInGallery(currentProblem.getProblem(), v.getContext());
+                    ViewImage.viewImageInGallery(currentProblem.getProblem(), v.getContext(), getPackageManager());
                 }
             });
 
             solutionImageButton.setOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View v) {
-                    ViewImage.viewImageInGallery(currentProblem.getSolution(), v.getContext());
+                    ViewImage.viewImageInGallery(currentProblem.getSolution(), v.getContext(), getPackageManager());
                 }
             });
         }

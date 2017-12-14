@@ -12,7 +12,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
 
-import edu.illinois.finalproject.unitdisplay.OnGetUrlListener;
+import edu.illinois.finalproject.problemdisplay.OnGetUrlListener;
 
 /**
  * Created by gajan on 12/6/2017.
@@ -36,6 +36,12 @@ public class DatabaseUtils {
         });
     }
 
+    /**
+     *
+     * @param pathToFile
+     * @param storageReference
+     * @param listener
+     */
     public void uploadImage(final String pathToFile, StorageReference storageReference, final OnGetUrlListener listener) {
         /*Obtains filename*/
         //The following line is derived from

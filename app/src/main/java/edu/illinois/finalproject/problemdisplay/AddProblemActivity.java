@@ -34,7 +34,6 @@ import edu.illinois.finalproject.ViewImage;
 import edu.illinois.finalproject.database.Problem;
 import edu.illinois.finalproject.DatabaseUtils;
 import edu.illinois.finalproject.R;
-import edu.illinois.finalproject.unitdisplay.OnGetUrlListener;
 
 public class AddProblemActivity extends AppCompatActivity {
     private String problemsKey;

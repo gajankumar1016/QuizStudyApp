@@ -68,6 +68,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 updateUserInterfaceWithRandomProblem();
             }
         } else {
+            //Need to generate a new random quiz problem
             FirebaseDatabase database = FirebaseDatabase.getInstance();
             final DatabaseReference unitsRef = database.getReference(Constants.FIREBASE_UNITS_ROOT).child(unitsKey);
             final DatabaseReference problemsRef = database.getReference(Constants.FIREBASE_PROBLEMS_ROOT);
@@ -75,6 +76,9 @@ public class QuizQuestionActivity extends AppCompatActivity {
         }
     }
 
+    /**
+     * Sets OnClickListeners for the buttons in the activity.
+     */
     private void setUpButtons() {
         checkAnswerButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -125,8 +129,15 @@ public class QuizQuestionActivity extends AppCompatActivity {
         });
     }
 
-    //https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
-    private void readProblemsFromDatabaseAndDisplayRandomProblem(final DatabaseReference unitsRef, final DatabaseReference problemsRef) {
+
+    /**
+     * Downloads problems for all units in a course and displays a random problem to the user.
+     * Derived from: https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
+     * @param unitsRef DatabaseReference to the units for a particular course
+     * @param problemsRef DatabaseReference to the root of where problems are stored in Firebase
+     */
+    private void readProblemsFromDatabaseAndDisplayRandomProblem(final DatabaseReference unitsRef,
+                                                                 final DatabaseReference problemsRef) {
         new DatabaseUtils().readInFireBaseData(unitsRef, new OnGetDataListener() {
             @Override
             public void onStart() {
@@ -141,11 +152,8 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 keyToUnitMap = dataSnapshot.getValue(unitsGti);
 
                 if (keyToUnitMap != null) {
-                    Log.d("QuizQuestions", keyToUnitMap.toString());
-
                     List<Unit> unitsList = new ArrayList<>(keyToUnitMap.values());
                     for (int i = 0; i < unitsList.size(); i++) {
-
                         String problemsKey = unitsList.get(i).getKeyToUnitOfProblems();
                         DatabaseReference problemsOfThisUnitRef = problemsRef.child(problemsKey);
 
@@ -159,7 +167,7 @@ public class QuizQuestionActivity extends AppCompatActivity {
 
                     }
                 } else {
-                    quizProblemTextView.setText(R.string.noProblems);
+                    updateUserInterfaceWithRandomProblem();
                 }
             }
 
@@ -170,7 +178,14 @@ public class QuizQuestionActivity extends AppCompatActivity {
         });
     }
 
-    //https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
+
+    /**
+     * Downloads problems from this course from firebase and displays random problem to user.
+     * Derived from: //https://stackoverflow.com/questions/33723139/wait-firebase-async-retrive-data-in-android
+     * @param problemsRef a DatabaseReference to the problems for a particular unit
+     * @param isLastUnit indicates if this is last unit to be read. If true, a random quiz problem
+     *                   is selected and presented to the user
+     */
     private void readProblemsData(DatabaseReference problemsRef, final boolean isLastUnit) {
         new DatabaseUtils().readInFireBaseData(problemsRef, new OnGetDataListener() {
             @Override
@@ -188,7 +203,6 @@ public class QuizQuestionActivity extends AppCompatActivity {
                 //the map could be null if the user hasn't created problems for the current unit yet.
                 if (tempKeyToProblemMap != null) {
                     for (Map.Entry<String, Problem> entry : tempKeyToProblemMap.entrySet()) {
-                        Log.d("QuizQuestion", entry.getKey() + " " + entry.getValue());
                         keyToProblemMap.put(entry.getKey(), entry.getValue());
                     }
                 }
@@ -207,6 +221,10 @@ public class QuizQuestionActivity extends AppCompatActivity {
         });
     }
 
+    /**
+     * Displays random problem to user or if there are not problems, indicates no problems exist.
+     * Also hides the GUI components that are not needed for a particular kind of Problem
+     */
     private void updateUserInterfaceWithRandomProblem() {
         //Handles case where there are no problems in the current course
         if (randomQuizProblem == null) {
